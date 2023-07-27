@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+<action>
+	<icon>utilities-terminal</icon>
+	<name>Open Terminal Here</name>
+	<submenu></submenu>
+	<unique-id>1591644400632141-1</unique-id>
+	<command>kitty -e /bin/fish</command>
+	<description>Example for a custom action</description>
+	<range></range>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+</action>
+<action>
+	<icon>preferences-desktop-wallpaper</icon>
+	<name>Set wallpaper</name>
+	<submenu></submenu>
+	<unique-id>1526628754365261-1</unique-id>
+	<command>feh --no-fehbg --bg-fill %f</command>
+	<description></description>
+	<range></range>
+	<patterns>*</patterns>
+	<image-files/>
+</action>
+<action>
+	<icon>final-term</icon>
+	<name>Extract here</name>
+	<submenu></submenu>
+	<unique-id>1489091300385082-4</unique-id>
+	<command>tar xjf %n</command>
+	<description></description>
+	<range></range>
+	<patterns>*.tar.bz2;*.tbz2</patterns>
+	<other-files/>
+</action>
+<action>
+	<icon>system-file-manager-root</icon>
+	<name>Open folder as root</name>
+	<submenu></submenu>
+	<unique-id>1493475601060449-3</unique-id>
+	<command>gksudo thunar %d</command>
+	<description></description>
+	<range></range>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<icon>ktexteditorautobrace</icon>
+	<name>Edit as root</name>
+	<submenu></submenu>
+	<unique-id>1526631419798289-11</unique-id>
+	<command>gksudo kitty micro %F</command>
+	<description>edit as root</description>
+	<range></range>
+	<patterns>*</patterns>
+	<text-files/>
+</action>
+<action>
+	<icon>aplication-x-executable</icon>
+	<name>Make executable</name>
+	<submenu></submenu>
+	<unique-id>1526670239648084-2</unique-id>
+	<command>chmod +x %f</command>
+	<description>Make a file execuble</description>
+	<range></range>
+	<patterns>*</patterns>
+	<other-files/>
+	<text-files/>
+</action>
+</actions>

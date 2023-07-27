@@ -1,0 +1,14 @@
+Xft.dpi:         115
+Xft.antialias:   true
+Xft.rgba:        rgb
+Xft.hinting:     true
+Xft.autohint:    false
+Xft.hintstyle:   hintfull
+Xft.lcdfilter:   lcddefault
+
+! Comand for search font:: fc-list | grep "JetBrains Mono"
+*.font: xft:JetBrainsMono Nerd Font:style=Medium,Regular:size=12
+
+Xcursor.theme: capitaine-cursors
+Xcursor.size: 24
+

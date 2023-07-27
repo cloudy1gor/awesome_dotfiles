@@ -1,0 +1,15 @@
+configuration {
+	font:														"JetBrainsMono Nerd Font 12";
+	terminal: 											"~/.config/rofi/terminal.sh";
+	show-icons:                     true;
+	icon-theme: 										"Papirus";
+	display-drun: 									"󱓇 ";
+	drun-display-format:            "{name}";	
+	disable-history:                false;
+	sidebar-mode: 									false;
+	cycle:												  true;
+	threads:											  2;
+	steal-focus:									  true;
+}
+
+@import "~/.config/rofi/cloud.rasi"
