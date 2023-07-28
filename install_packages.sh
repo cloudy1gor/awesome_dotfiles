@@ -44,7 +44,7 @@ PKGS=(
   'awesome'
   'polybar'
   'rofi'
-  'picom-ftlabs-git'
+  'picom-jonaburg-git'
   'redshift-minimal'
   'safeeyes'
   'wedder-git'
@@ -53,7 +53,7 @@ PKGS=(
   'unclutter'
   'copyq'
   'xsettingsd'
-  'betterlockscreen'
+  'i3lock-color'
   'tlp'
   'tlp-rdw'
   'powertop'
@@ -93,6 +93,7 @@ PKGS=(
   'mpd'
   'ncmpcpp'
   'cava'
+  'glava'
 
 	# Browsers
  	'librewolf-bin'

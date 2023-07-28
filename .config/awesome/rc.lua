@@ -18,9 +18,18 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+-- Systray
+local systray = wibox.widget.systray()
+systray.set_base_size(25)
+
+-- Separator
+local separator = wibox.widget.separator()
+separator.forced_width = 10
+
+local separator_text = wibox.widget.textbox(")")
+separator_text.font = "JetBrainsMono Nerd Font 26"
+
 -- {{{ Error handling
--- Check if awesome encountered an error during startup and fell back to
--- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
                      title = "Oops, there were errors during startup!",
@@ -58,14 +67,14 @@ modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
     awful.layout.suit.floating,
-    awful.layout.suit.tile,
+    -- awful.layout.suit.tile,
     -- awful.layout.suit.tile.left,
-    awful.layout.suit.tile.bottom,
+    -- awful.layout.suit.tile.bottom,
     -- awful.layout.suit.tile.top,
-    -- awful.layout.suit.fair,
+    awful.layout.suit.fair,
     -- awful.layout.suit.fair.horizontal,
-    -- awful.layout.suit.spiral,
-    -- awful.layout.suit.spiral.dwindle,
+    awful.layout.suit.spiral,
+    -- awful.layout.suit.spiral.dwindle, 
     -- awful.layout.suit.max,
     -- awful.layout.suit.max.fullscreen,
     -- awful.layout.suit.magnifier,
@@ -97,9 +106,6 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
-
--- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a wibox for each screen and add it
@@ -144,7 +150,7 @@ local tasklist_buttons = gears.table.join(
 
 awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
-    awful.tag({ "  " , "  ", "  ", " 󰊠 ", "   ", "  ", "  ", " 󰨞 ", "   " }, s, awful.layout.layouts[2])
+    awful.tag({ " " , " ", " ", "󰡛", " ", " ", " ", "󰨞 ", " " }, s, awful.layout.layouts[2])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -160,7 +166,14 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytaglist = awful.widget.taglist {
         screen  = s,
         filter  = awful.widget.taglist.filter.all,
-        buttons = taglist_buttons
+        buttons = taglist_buttons,
+        style = {
+        shape = function(cr, width, height)
+            gears.shape.rounded_rect(cr, width, height, 4)
+        end,
+        bg_resize = true,
+        spacing = 8
+        }
     }
 
     -- Create a tasklist widget
@@ -171,37 +184,44 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     -- -- Create the wibox
-    s.mywibox = awful.wibar({ position = "bottom", screen = s, width = screen[1].geometry.width * 0.6, })
+    s.mywibox = awful.wibar({
+        position = "bottom",
+        screen = s,
+        width = screen[1].geometry.width * 0.45,
+        height = 34,
+        border_width = 6,
+        border_color = "#000000",
+        bg = "#ffffff"
+    })
     --
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            wibox.widget.textbox(" "),
-            wibox.widget.systray({
-                base_size = 5,
-            }),
-            wibox.widget.textbox(" "),
+            wibox.layout.margin(systray, 13, 0, 5, 5),
+            separator_text,
         },
-        s.mytaglist, expand = "outside", -- Middle widget
+        -- Middle widget
+        s.mytaglist,
+        expand = "outside",
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            wibox.widget.textbox("                 "),
-            s.mylayoutbox,
-            wibox.widget.textbox(" "),
-            mylauncher,
+            wibox.widget.textbox("             "),
+            wibox.layout.margin(s.mylayoutbox, 4, 4, 4, 4),
+            wibox.layout.margin(mylauncher, 4, 4, 4, 4),
         },
     }
+
 end)
 -- }}}
 
 -- {{{ Key bindings
 globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help),
-    awful.key({ modkey,           }, "Left",   awful.tag.viewprev),
+    awful.key({ modkey, "Shift"          }, "Left",   awful.tag.viewprev),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext),
-    awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
+    awful.key({ modkey,           }, "Tab", awful.tag.history.restore),
 
     awful.key({ modkey,           }, "j",
         function ()
@@ -233,11 +253,22 @@ globalkeys = gears.table.join(
         {description = "go back", group = "client"}),
 
     --  Brightness % Volume media keys
-    awful.key({}, "XF86AudioRaiseVolume", function() awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ +5%") end),
-    awful.key({}, "XF86AudioMute", function() awful.spawn.with_shell("pactl set-sink-mute @DEFAULT_SINK@ toggle") end),
-    awful.key({}, "XF86AudioLowerVolume", function() awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ -5%") end),
-    awful.key({}, "XF86MonBrightnessDown", function() awful.util.spawn("brightnessctl s 5%-") end),
-    awful.key({}, "XF86MonBrightnessUp", function() awful.util.spawn("brightnessctl s +5%") end),
+    awful.key({}, "XF86AudioRaiseVolume", function()
+        awful.spawn.with_shell("export XDG_RUNTIME_DIR=/run/user/$(id -u) && ~/.config/awesome/scripts/volume.sh up")
+    end),
+    awful.key({}, "XF86AudioMute", function()
+        awful.spawn.with_shell("export XDG_RUNTIME_DIR=/run/user/$(id -u) && ~/.config/awesome/scripts/volume.sh mute")
+    end),
+    awful.key({}, "XF86AudioLowerVolume", function()
+        awful.spawn.with_shell("export XDG_RUNTIME_DIR=/run/user/$(id -u) && ~/.config/awesome/scripts/volume.sh down")
+    end),
+    awful.key({}, "XF86MonBrightnessDown", function()
+        awful.spawn.with_shell("export XDG_RUNTIME_DIR=/run/user/$(id -u) && ~/.config/awesome/scripts/brightness.sh down")
+    end),
+    awful.key({}, "XF86MonBrightnessUp", function()
+        awful.spawn.with_shell("export XDG_RUNTIME_DIR=/run/user/$(id -u) && ~/.config/awesome/scripts/brightness.sh up")
+    end),
+    
 
     -- Standard program
     awful.key({ modkey }, "Return", function() awful.spawn(terminal) end),
@@ -246,8 +277,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Shift" }, "q", awesome.quit),
 
     -- Wallpaper changer
-    -- awful.key({ modkey }, "w", function() awful.spawn("feh --bg-scale --randomize --no-fehbg ~/Pictures/Wallpapers/*") end),
-    awful.key({ modkey, "Shift" }, "w", function() awful.spawn("feh --bg-scale --randomize --no-fehbg " .. os.getenv("HOME") .. "/Pictures/Wallpapers/*") end),
+    awful.key({ modkey }, "w", function() awful.spawn.with_shell("feh --bg-fill --no-fehbg -r -z ~/Pictures/Wallpapers/*") end),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end),
@@ -278,7 +308,18 @@ globalkeys = gears.table.join(
     -- Screenshot
     awful.key({}, "Print", function()
         awful.spawn.with_shell("flameshot gui")
-    end)
+    end),
+
+    -- Toogle wibar
+    awful.key({ modkey }, "d", function()
+		myscreen = awful.screen.focused()
+		myscreen.mywibox.visible = not myscreen.mywibox.visible
+	end),
+
+    -- Lock
+    awful.key({ modkey }, "Escape", function()
+		awful.spawn.with_shell("~/.config/awesome/scripts/i3lock-fancy/i3lock-fancy.sh")
+	end)
 )
 
 clientkeys = gears.table.join(
@@ -396,7 +437,22 @@ awful.rules.rules = {
                      buttons = clientbuttons,
                      screen = awful.screen.preferred,
                      placement = awful.placement.no_overlap+awful.placement.no_offscreen
-     }
+     },
+
+     -- glava
+    {
+        rule = { class = "GLava" },
+        properties = {
+        floating = true,
+        buttons = nil,
+        keys = nil,
+        focusable = false,
+        geometry = { height = 300, width = 2560, y = 1440 - 300 + 16 },
+        sticky = true,
+        below = true,
+        titlebars_enabled = false,
+    }
+  },
     },
 
     -- Floating clients.
@@ -460,13 +516,12 @@ end)
 -- Autostart
     awful.spawn.with_shell("ksuperkey -e 'Super_L=Alt_L|F1' & ksuperkey -e 'Super_R=Alt_L|F1'")
     awful.spawn.with_shell("feh --bg-scale --randomize --no-fehbg ~/Pictures/Wallpapers/*")
-    awful.spawn.with_shell("picom -CGb --config ~/picom.conf")
+    awful.spawn.with_shell("picom -CGb --config ~/.config/picom.conf")
     awful.spawn.with_shell("~/.config/polybar/launch.sh")
-    awful.spawn.with_shell("copyq")
-    awful.spawn.with_shell("telegram-desktop --startintray")
-    awful.spawn.with_shell("espanso")
-    awful.spawn.with_shell("megasync")
-    awful.spawn.with_shell("copyq")
+    awful.spawn.with_shell("~/.config/awesome/scripts/autostart.sh")
+    awful.spawn.with_shell("~/.config/awesome/scripts/volume.sh")
+    awful.spawn.with_shell("~/.config/awesome/scripts/brightness.sh")
+    awful.spawn.with_shell("~/.config/awesome/scripts/battery_monitor.sh")
 
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
@@ -476,3 +531,6 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+-- Comand to show app name
+-- xprop | grep WM_CLASS

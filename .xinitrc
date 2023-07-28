@@ -33,6 +33,5 @@ fi
 [ -f /etc/xprofile ] && . /etc/xprofile
 [ -f ~/.xprofile ] && . ~/.xprofile
 
-xsettingsd &
 exec awesome
 

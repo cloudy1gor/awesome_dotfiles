@@ -8,7 +8,7 @@ xbanish &
 unclutter -idle 2 &
 
 # Fix cursor shape
-# xsetroot -cursor_name left_ptr &
+xsetroot -cursor_name left_ptr &
 
 # Wallpaper
 # feh --bg-scale --randomize --no-fehbg ~/Pictures/Wallpapers/*
@@ -31,14 +31,12 @@ xinput set-prop "ELAN0504:01 04F3:312B Touchpad" "libinput Accel Profile Enabled
 xinput set-prop "ELAN0504:01 04F3:312B Touchpad" "libinput Natural Scrolling Enabled" 1
 xinput set-prop "ELAN0504:01 04F3:312B Touchpad" "libinput Middle Emulation Enabled" 1
 
+# Set GTK theme, icons, cursor
+xsettingsd &
+
 # Set the scale
 # export WINIT_X11_SCALE_FACTOR=1
 
 # Set default terminal
 export TERMINAL="/usr/bin/kitty"
 
-# Set the GTK icon theme
-# export GTK_THEME="Papirus"
-
-# Set the GTK theme
-# export GTK3_THEME="WhiteSur-Light"
