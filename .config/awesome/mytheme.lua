@@ -11,6 +11,10 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
+local awful = require("awful")
+local screen_width = awful.screen.focused().geometry.width
+local screen_height = awful.screen.focused().geometry.height
+
 theme.font          = "JetBrainsMono Nerd Font 14"
 
 theme.bg_normal     = "#6C7A89"
@@ -39,6 +43,9 @@ theme.border_marked = "#91231c"
 -- prompt_[fg|bg|fg_cursor|bg_cursor|font]
 -- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
 
+-- Tags
+theme.tag = { " " , " ", " ", "󰡛", " ", " ", " ", "󰨞 ", " " }
+
 theme.taglist_fg_empty = "#c8c8c8"
 theme.taglist_fg_occupied = "#6C7A89"
 theme.taglist_fg_focus = "#000000"
@@ -52,14 +59,25 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
     taglist_square_size, theme.fg_normal
 )
 
--- Variables set for theming notifications:
--- notification_font
--- notification_[bg|fg]
--- notification_[width|height|margin]
--- notification_[border_color|border_width|shape|opacity]
-theme.notification_border_width = 6
+-- Notifications
+-- Position: bottom_left, bottom_right, bottom_middle,
+--         top_left, top_right, top_middle
+theme.notification_position = "top_right"
+theme.notification_border_width = dpi(6)
+theme.notification_border_radius = dpi(15)
 theme.notification_border_color = "#000000"
 theme.notification_bg = "#ffffff"
+-- theme.notification_fg = ""
+-- theme.notification_crit_bg = ""
+-- theme.notification_crit_fg = ""
+theme.notification_icon_size = dpi(64)
+-- theme.notification_height = dpi(80)
+-- theme.notification_width = dpi(300)
+theme.notification_margin = dpi(15)
+theme.notification_opacity = 1
+-- theme.notification_font = 
+-- theme.notification_padding = theme.screen_margin * 2
+-- theme.notification_spacing = theme.screen_margin * 2
 
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
@@ -67,6 +85,8 @@ theme.notification_bg = "#ffffff"
 theme.menu_submenu_icon = themes_path.."default/submenu.png"
 theme.menu_height = dpi(20)
 theme.menu_width  = dpi(200)
+
+
 
 -- You can add as many variables as
 -- you wish and access them by using

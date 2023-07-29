@@ -12,8 +12,8 @@ makepkg -si
 yay --editmenu --nodiffmenu --save
 
 PKGS=(
-	# Gpu drivers
-	'amd-ucode'
+  # Gpu drivers
+  'amd-ucode'
   'xf86-video-amdgpu'
   'lib32-mesa'
   'vulkan-radeon'
@@ -22,7 +22,8 @@ PKGS=(
   'lib32-vulkan-icd-loader'
 
   # WM & base packages
-	'git'
+  'ly'
+  'git'
   'xorg-xinput'
   'xorg-xsetroot'
   'curl'
@@ -60,7 +61,7 @@ PKGS=(
   'ufw'
   'iptables'
 
-	# Fonts, icons, cursors, themes
+  # Fonts, icons, cursors, themes
   'ttf-jetbrains-mono-nerd'
   'ttf-iosevka-nerd'
   'ttf-ms-win11-auto'
@@ -88,15 +89,15 @@ PKGS=(
   'ntfs-3g'
   'gksu'
 
-	# Media
+  # Media
   'mpv'
   'mpd'
   'ncmpcpp'
   'cava'
   'glava'
 
-	# Browsers
- 	'librewolf-bin'
+  # Browsers
+  'librewolf-bin'
   'ungoogled-chromium-bin'
   'brave-bin'
 
@@ -106,7 +107,7 @@ PKGS=(
   'skypeforlinux-stable-bin'
   'zoom'
 
-	# Dev apps
+  # Dev apps
   'neovim'
   'visual-studio-code-bin'
   'phpstorm'
@@ -129,7 +130,7 @@ PKGS=(
   'postgresql'
   'litecli'
 
-	# VM
+  # VM
   'qemu-full'
   'virt-manager'
   'virt-viewer'
@@ -166,8 +167,8 @@ PKGS=(
   'obs-studio'
   'qbittorrent'
   'gotop-bin'
-	'espanso-bin'
-	'figma-linux-bin'
+  'espanso-bin'
+  'figma-linux-bin'
   'obsidian'
   'koreader-bin'
   'peaclock'
@@ -187,6 +188,8 @@ for PKG in "${PKGS[@]}"; do
 done
 
 papirus-folders -C bluegrey
+
+sudo systemctl enable ly.service
 sudo ufw enable
 sudo systemctl enable ufw.service
 sudo ufw allow ssh
@@ -218,7 +221,7 @@ git clone https://github.com/AdnanHodzic/auto-cpufreq.git
 cd auto-cpufreq && sudo ./auto-cpufreq-installer
 sudo auto-cpufreq --install
 
-tide configure
-
 sudo yay -Yc
+
+tide configure
 

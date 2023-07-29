@@ -5,6 +5,13 @@
 # ██║     ██║███████║██║  ██║
 # ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝
                            
+# Autostart
+if status is-login
+    if test -z "$DISPLAY" -a "$(tty)" = /dev/tty1
+        exec startx -- -keeptty
+    end
+end
+
 if not functions -q fundle; eval (curl -sfL https://git.io/fundle-install); end
 
 set fish_greeting ""
@@ -101,4 +108,5 @@ if status --is-interactive
 end
 
 export TERM=xterm-kitty
+
 
