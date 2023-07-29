@@ -29,6 +29,11 @@ separator.forced_width = 10
 local separator_text = wibox.widget.textbox(")")
 separator_text.font = "JetBrainsMono Nerd Font 26"
 
+-- Set rounded corners
+function custom_shape(cr, width, height)
+gears.shape.rounded_rect(cr, width, height, 18)
+end
+
 -- {{{ Error handling
 if awesome.startup_errors then
     naughty.notify({
@@ -114,6 +119,8 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- }}}
 
 -- {{{ Wibar
+
+
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
                             awful.button({}, 1, function(t) t:view_only() end),
@@ -143,8 +150,7 @@ local tasklist_buttons = gears.table.join(
 
 awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
-    awful.tag(beautiful.tag or {"sys", "web", "fs", "key", "hi", "not", "vim", "vs", "mus"}, s,
-              awful.layout.layouts[2])
+    awful.tag(beautiful.tag or {"sys", "web", "fs", "key", "hi", "not", "vim", "vs", "mus"}, s, awful.layout.layouts[2])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -183,17 +189,18 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = tasklist_buttons
     }
 
-    -- -- Create the wibox
+    -- Create the wibox
     s.mywibox = awful.wibar({
         position = "bottom",
         screen = s,
         width = screen[1].geometry.width * 0.45,
         height = 34,
         border_width = 6,
+        shape = custom_shape,
         border_color = "#000000",
         bg = "#ffffff"
     })
-    --
+
     -- Add widgets to the wibox
     s.mywibox:setup{
         layout = wibox.layout.align.horizontal,
@@ -243,70 +250,68 @@ end, {description = "focus the previous screen", group = "screen"}),
                                         awful.client.urgent.jumpto, {
     description = "jump to urgent client",
     group = "client"
-}), awful.key({modkey}, "Tab", function()
-    awful.client.focus.history.previous()
-    if client.focus then client.focus:raise() end
-end, {description = "go back", group = "client"}), --  Brightness % Volume media keys
-                              awful.key({}, "XF86AudioRaiseVolume", function()
-    awful.spawn.with_shell(
+}), 
+    awful.key({modkey}, "Tab", function()awful.client.focus.history.previous()if client.focus then client.focus:raise() end
+    end, {description = "go back", group = "client"}), 
+    
+    --  Brightness % Volume media keys
+    awful.key({}, "XF86AudioRaiseVolume", function()awful.spawn.with_shell(
         "export XDG_RUNTIME_DIR=/run/user/$(id -u) && ~/.config/awesome/scripts/volume.sh up")
-end), awful.key({}, "XF86AudioMute", function()
-    awful.spawn.with_shell(
-        "export XDG_RUNTIME_DIR=/run/user/$(id -u) && ~/.config/awesome/scripts/volume.sh mute")
-end), awful.key({}, "XF86AudioLowerVolume", function()
-    awful.spawn.with_shell(
-        "export XDG_RUNTIME_DIR=/run/user/$(id -u) && ~/.config/awesome/scripts/volume.sh down")
-end), awful.key({}, "XF86MonBrightnessDown", function()
-    awful.spawn.with_shell(
-        "export XDG_RUNTIME_DIR=/run/user/$(id -u) && ~/.config/awesome/scripts/brightness.sh down")
-end), awful.key({}, "XF86MonBrightnessUp", function()
-    awful.spawn.with_shell(
-        "export XDG_RUNTIME_DIR=/run/user/$(id -u) && ~/.config/awesome/scripts/brightness.sh up")
-end), -- Standard program
-awful.key({modkey}, "Return", function() awful.spawn(terminal) end), awful.key(
-                                  {modkey}, "BackSpace",
-                                  function() awful.spawn("thunar") end),
-                              awful.key({modkey, "Shift"}, "r", awesome.restart),
-                              awful.key({modkey, "Shift"}, "q", awesome.quit),
+    end),
 
--- Wallpaper changer
-                              awful.key({modkey}, "w", function()
-    awful.spawn.with_shell(
-        "feh --bg-fill --no-fehbg -r -z ~/Pictures/Wallpapers/*")
-end), awful.key({modkey}, "l", function() awful.tag.incmwfact(0.05) end),
-                              awful.key({modkey}, "h", function()
-    awful.tag.incmwfact(-0.05)
-end), awful.key({modkey, "Shift"}, "h",
-                function() awful.tag.incnmaster(1, nil, true) end),
-                              awful.key({modkey, "Shift"}, "l", function()
-    awful.tag.incnmaster(-1, nil, true)
-end), awful.key({modkey, "Control"}, "h",
-                function() awful.tag.incncol(1, nil, true) end),
-                              awful.key({modkey, "Control"}, "l", function()
-    awful.tag.incncol(-1, nil, true)
-end), awful.key({modkey}, "space", function() awful.layout.inc(1) end),
-                              awful.key({modkey, "Shift"}, "space",
-                                        function() awful.layout.inc(-1) end),
-                              awful.key({modkey, "Control"}, "n", function()
-    local c = awful.client.restore()
-    -- Focus restored client
+    awful.key({}, "XF86AudioMute", function()awful.spawn.with_shell(
+        "export XDG_RUNTIME_DIR=/run/user/$(id -u) && ~/.config/awesome/scripts/volume.sh mute")
+    end),
+    awful.key({}, "XF86AudioLowerVolume", function()awful.spawn.with_shell(
+        "export XDG_RUNTIME_DIR=/run/user/$(id -u) && ~/.config/awesome/scripts/volume.sh down")
+    end),
+    awful.key({}, "XF86MonBrightnessDown", function()awful.spawn.with_shell(
+        "export XDG_RUNTIME_DIR=/run/user/$(id -u) && ~/.config/awesome/scripts/brightness.sh down")
+    end),
+    awful.key({}, "XF86MonBrightnessUp", function()awful.spawn.with_shell(
+        "export XDG_RUNTIME_DIR=/run/user/$(id -u) && ~/.config/awesome/scripts/brightness.sh up")
+    end),
+
+    -- Standard program
+    awful.key({modkey}, "Return", function() awful.spawn(terminal) end),
+    awful.key({modkey}, "BackSpace",function() awful.spawn("thunar") end),
+    awful.key({modkey}, "w", function() awful.spawn("qutebrowser") end),
+    awful.key({modkey}, "c", function() awful.spawn("code") end),
+    awful.key({modkey, "Shift"}, "r", awesome.restart),
+    awful.key({modkey, "Shift"}, "q", awesome.quit),
+
+    -- Wallpaper changer
+    awful.key({modkey, "Shift"}, "w", function()awful.spawn.with_shell("feh --bg-fill --no-fehbg -r -z ~/Pictures/Wallpapers/*")end),
+
+    awful.key({modkey}, "l", function() awful.tag.incmwfact(0.05) end),
+    awful.key({modkey}, "h", function()awful.tag.incmwfact(-0.05)end), 
+    awful.key({modkey, "Shift"}, "h",function() awful.tag.incnmaster(1, nil, true) end),
+    awful.key({modkey, "Shift"}, "l", function()awful.tag.incnmaster(-1, nil, true)end), 
+    awful.key({modkey, "Control"}, "h",function() awful.tag.incncol(1, nil, true) end),
+    awful.key({modkey, "Control"}, "l", function()awful.tag.incncol(-1, nil, true)end), 
+    awful.key({modkey}, "space", function() awful.layout.inc(1) end),
+    awful.key({modkey, "Shift"}, "space",function() awful.layout.inc(-1) end),
+    awful.key({modkey, "Control"}, "n", function()local c = awful.client.restore()
+    
+        -- Focus restored client
     if c then
         c:emit_signal("request::activate", "key.unminimize", {raise = true})
-    end
-end), -- Rofi app launcher
-awful.key({"Mod1"}, "F1", function() awful.util.spawn("rofi -show drun") end), -- Rofi powermenu 
-                              awful.key({modkey, "Shift"}, "e", function()
-    awful.util.spawn("sh " .. os.getenv("HOME") .. "/.config/rofi/powermenu.sh")
-end), -- Screenshot
-awful.key({}, "Print", function() awful.spawn.with_shell("flameshot gui") end), -- Toogle wibar
-                              awful.key({modkey}, "d", function()
-    myscreen = awful.screen.focused()
-    myscreen.mywibox.visible = not myscreen.mywibox.visible
-end), -- Lock
-awful.key({modkey}, "Escape", function()
-    awful.spawn.with_shell(
-        "~/.config/awesome/scripts/i3lock-fancy/i3lock-fancy.sh")
-end))
+    end end),
+
+       -- Rofi app launcher
+    awful.key({"Mod1"}, "F1", function() awful.util.spawn("rofi -show drun") end),
+
+    -- Rofi powermenu 
+    awful.key({modkey, "Shift"}, "e", function()awful.util.spawn("sh " .. os.getenv("HOME") .. "/.config/rofi/powermenu.sh")end),
+
+    -- Screenshot
+    awful.key({}, "Print", function() awful.spawn.with_shell("flameshot gui") end),
+    
+    -- Toogle wibar
+    awful.key({modkey}, "d", function()myscreen = awful.screen.focused()myscreen.mywibox.visible = not myscreen.mywibox.visible end),
+    
+    -- Lock
+    awful.key({modkey}, "Escape", function()awful.spawn.with_shell("~/.config/awesome/scripts/i3lock-fancy/i3lock-fancy.sh")end))
 
 clientkeys = gears.table.join(awful.key({modkey}, "f", function(c)
     c.fullscreen = not c.fullscreen
@@ -367,14 +372,9 @@ for i = 1, 9 do
     end, {description = "toggle focused client on tag #" .. i, group = "tag"}))
 end
 
-clientbuttons = gears.table.join(awful.button({}, 1, function(c)
-    c:emit_signal("request::activate", "mouse_click", {raise = true})
-end), awful.button({modkey}, 1, function(c)
-    c:emit_signal("request::activate", "mouse_click", {raise = true})
-    awful.mouse.client.move(c)
-end), awful.button({modkey}, 3, function(c)
-    c:emit_signal("request::activate", "mouse_click", {raise = true})
-    awful.mouse.client.resize(c)
+clientbuttons = gears.table.join(awful.button({}, 1, function(c)c:emit_signal("request::activate", "mouse_click", {raise = true}) end),
+    awful.button({modkey}, 1, function(c)c:emit_signal("request::activate", "mouse_click", {raise = true})awful.mouse.client.move(c) end), 
+    awful.button({modkey}, 3, function(c)c:emit_signal("request::activate", "mouse_click", {raise = true})awful.mouse.client.resize(c)
 end))
 
 -- Set keys
@@ -448,7 +448,7 @@ awful.rules.rules = { -- All clients will match this rule.
         rule_any = {
             name = {
                 "LibreWolf",
-                "Qutebrowser",
+                "qutebrowser",
                 "Vivaldi-stable",
                 "Chromium",
                 "Google-chrome",
@@ -482,23 +482,25 @@ awful.rules.rules = { -- All clients will match this rule.
 
     {
         rule_any = {
-            rule = {
-                class = "TelegramDesktop"
+            {
+                instance = "telegram-desktop",
+                class = { "TelegramDesktop","discord", "Zoom", "Skype" }
             },
-            properties = {
-                floating = true,
-                width = "420",
-                height = "900",
-            },
-
-            rule_any = {
-                class = { "discord", "Zoom", "Skype" }
-            },
-            properties = {
-                floating = false
-            }
         },
-        properties = {screen = 1, tag = beautiful.tag[5], switchtotag = true}
+        properties = {
+            screen = 1,
+            tag = beautiful.tag[5],
+            switchtotag = true,
+            floating = function(c)
+                if c.instance == "telegram-desktop" or c.class == "TelegramDesktop" then
+                    return true
+                end
+                return false
+            end,
+            width = 420,
+            height = 900,
+            placement = awful.placement.right
+        }
     },
 
     {
@@ -532,7 +534,7 @@ awful.spawn.with_shell(
     "ksuperkey -e 'Super_L=Alt_L|F1' & ksuperkey -e 'Super_R=Alt_L|F1'")
 awful.spawn.with_shell(
     "feh --bg-scale --randomize --no-fehbg ~/Pictures/Wallpapers/*")
-awful.spawn.with_shell("picom -CGb --config ~/.config/picom.conf")
+-- awful.spawn.with_shell("picom -CGb --config ~/.config/picom.conf")
 awful.spawn.with_shell("~/.config/polybar/launch.sh")
 awful.spawn.with_shell("~/.config/awesome/scripts/autostart.sh")
 awful.spawn.with_shell("~/.config/awesome/scripts/volume.sh")
@@ -548,6 +550,13 @@ client.connect_signal("focus",
                       function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus",
                       function(c) c.border_color = beautiful.border_normal end)
+
+-- Rounded corners for all windows
+client.connect_signal("manage", function(c)
+    c.shape = function(cr, w, h)
+        gears.shape.rounded_rect(cr, w, h, 18)
+    end
+end)
 -- }}}
 
 -- Comand to show app name

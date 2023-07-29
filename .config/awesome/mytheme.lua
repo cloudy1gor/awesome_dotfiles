@@ -64,7 +64,6 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
 --         top_left, top_right, top_middle
 theme.notification_position = "top_right"
 theme.notification_border_width = dpi(6)
-theme.notification_border_radius = dpi(15)
 theme.notification_border_color = "#000000"
 theme.notification_bg = "#ffffff"
 -- theme.notification_fg = ""
