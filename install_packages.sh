@@ -97,8 +97,9 @@ PKGS=(
   'glava'
 
   # Browsers
+  'qutebrowser'
+  'python-adblock'
   'librewolf-bin'
-  'ungoogled-chromium-bin'
   'brave-bin'
 
   # Social
