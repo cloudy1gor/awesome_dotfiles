@@ -2,6 +2,15 @@ return {
   -- Set colorscheme to use
   colorscheme = "onenord",
 
+    options = {
+    opt = {
+      -- foldcolumn = "0",
+      relativenumber = false,
+      signcolumn = "auto",
+      spell = true,
+    },
+  },
+
   plugins = {
     {
       "rmehri01/onenord.nvim",
@@ -11,6 +20,64 @@ return {
           theme = "light", -- "dark" or "light".
         })
       end,
+    },
+
+    {
+      "nvim-neo-tree/neo-tree.nvim",
+      opts = {
+        filesystem = {
+          filtered_items = {
+            hide_dotfiles = false,
+          },
+        },
+      }
+    },
+
+    {
+      "nvim-treesitter/nvim-treesitter",
+      opts = {
+        ensure_installed = {
+          "bash",
+          "lua",
+          "html",
+          "css",
+          "javascript",
+          "typescript",
+          "php",
+          "python",
+        },
+      },
+    },
+
+  lsp = {
+    servers = {
+      "bashls",
+      "cssls",
+      "eslint",
+      "html",
+      "jsonls",
+      "jsonnet_ls",
+      "pylsp",
+      "tsserver",
+      "intelephense",
+      "twig",
+      "yamlls",
+      "dockerls",
+    },
+
+    formatting = {
+      disabled = {
+        -- use null-ls' gofumpt/goimports instead
+        -- https://github.com/golang/tools/pull/410
+        -- use null-ls' prettier instead
+        "tsserver",
+      },
+      format_on_save = {
+        enabled = true,
+        allow_filetypes = {
+          "jsonnet",
+        },
+      },
     },
   },
 
@@ -24,52 +91,5 @@ return {
       "    ██   ████   ████   ██ ██      ██",
   },
 
-  icons = {
-    ActiveLSP = "",
-    ActiveTS = "",
-    ArrowLeft = "",
-    ArrowRight = "",
-    BufferClose = "󰅖",
-    DapBreakpoint = "",
-    DapBreakpointCondition = "",
-    DapBreakpointRejected = "",
-    DapLogPoint = ".>",
-    DapStopped = "󰁕",
-    DefaultFile = "󰈙",
-    Diagnostic = "󰒡",
-    DiagnosticError = "",
-    DiagnosticHint = "󰌵",
-    DiagnosticInfo = "󰋼",
-    DiagnosticWarn = "",
-    Ellipsis = "…",
-    FileModified = "",
-    FileReadOnly = "",
-    FoldClosed = "",
-    FoldOpened = "",
-    FoldSeparator = " ",
-    FolderClosed = "",
-    FolderEmpty = "",
-    FolderOpen = "",
-    Git = "󰊢",
-    GitAdd = "",
-    GitBranch = "",
-    GitChange = "",
-    GitConflict = "",
-    GitDelete = "",
-    GitIgnored = "◌",
-    GitRenamed = "➜",
-    GitStaged = "✓",
-    GitUnstaged = "✗",
-    GitUntracked = "★",
-    LSPLoaded = "",
-    LSPLoading1 = "",
-    LSPLoading2 = "󰀚",
-    LSPLoading3 = "",
-    MacroRecording = "",
-    Paste = "󰅌",
-    Search = "",
-    Selected = "❯",
-    Spellcheck = "󰓆",
-    TabClose = "󰅙",
-  }
+}
 }

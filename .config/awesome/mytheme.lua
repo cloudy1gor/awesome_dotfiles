@@ -19,7 +19,7 @@ theme.font          = "JetBrainsMono Nerd Font 14"
 
 theme.bg_normal     = "#6C7A89"
 theme.bg_focus      = "#ffffff"
-theme.bg_urgent     = "#ff0000"
+theme.bg_urgent     = "#ffffff"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = "#ffffff"
 theme.systray_icon_spacing = 4
@@ -29,10 +29,10 @@ theme.fg_focus      = "#6C7A89"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
-theme.useless_gap   = dpi(3)
-theme.border_width  = dpi(6)
-theme.border_normal = "#000000"
-theme.border_focus  = "#535d6c"
+theme.useless_gap   = dpi(2)
+theme.border_width  = dpi(4)
+theme.border_normal = "#6C7A89"
+theme.border_focus  = "#000000"
 theme.border_marked = "#91231c"
 
 -- taglist_[bg|fg]_[focus|urgent|occupied|empty|volatile]
@@ -44,7 +44,7 @@ theme.border_marked = "#91231c"
 -- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
 
 -- Tags
-theme.tag = { " " , " ", " ", "󰡛", " ", " ", " ", "󰨞 ", " " }
+theme.tag = { "󰅬 " , " ", " ", "󰡛", " ", " ", " ", "󰨞 ", " " }
 
 theme.taglist_fg_empty = "#c8c8c8"
 theme.taglist_fg_occupied = "#6C7A89"
@@ -60,10 +60,8 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
 )
 
 -- Notifications
--- Position: bottom_left, bottom_right, bottom_middle,
---         top_left, top_right, top_middle
 theme.notification_position = "top_right"
-theme.notification_border_width = dpi(6)
+theme.notification_border_width = dpi(4)
 theme.notification_border_color = "#000000"
 theme.notification_bg = "#ffffff"
 -- theme.notification_fg = ""
@@ -84,13 +82,6 @@ theme.notification_opacity = 1
 theme.menu_submenu_icon = themes_path.."default/submenu.png"
 theme.menu_height = dpi(20)
 theme.menu_width  = dpi(200)
-
-
-
--- You can add as many variables as
--- you wish and access them by using
--- beautiful.variable in your rc.lua
---theme.bg_widget = "#cc0000"
 
 -- theme.wallpaper = themes_path.."default/background.png"
 
@@ -113,9 +104,6 @@ theme.layout_cornersw = "~/.config/awesome/icons/layouts/cornersw.png"
 theme.layout_cornerse = "~/.config/awesome/icons/layouts/cornerse.png"
 
 -- Generate Awesome icon:
--- theme.awesome_icon = theme_assets.awesome_icon(
---     theme.menu_height, theme.bg_focus, theme.fg_focus
--- )
 theme.awesome_icon = "~/.config/awesome/icons/menu.png"
 
 -- Define the icon theme for application icons. If not set then the icons

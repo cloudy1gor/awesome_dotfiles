@@ -98,7 +98,6 @@ PKGS=(
 
   # Browsers
   'qutebrowser'
-  'python-adblock'
   'librewolf-bin'
   'brave-bin'
 
@@ -179,6 +178,7 @@ PKGS=(
   'ventoy-bin'
   'stacer-bin'
   'bleachbit'
+  'asciiquarium'
   'megasync-git'
   'keepassxc-git'
 )

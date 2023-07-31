@@ -27,26 +27,18 @@ function custom_shape(cr, width, height)
     gears.shape.rounded_rect(cr, width, height, 18)
 end
 
--- {{{ Variable definitions
--- Themes define colours, icons, font and wallpapers.
 beautiful.init("~/.config/awesome/mytheme.lua")
 
--- This is used later as the default terminal and editor to run.
 terminal = "kitty"
 editor = os.getenv("EDITOR") or "micro"
 editor_cmd = terminal .. " -e " .. editor
 
--- Default modkey.
 modkey = "Mod4"
 
--- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
     awful.layout.suit.floating,
-    awful.layout.suit.tile,
-    awful.layout.suit.fair
-    -- awful.layout.suit.spiral
+    awful.layout.suit.tile
 }
--- }}}
 
 -- {{{ Wibar
 -- Create a wibox for each screen and add it
@@ -77,7 +69,56 @@ local tasklist_buttons = gears.table.join(
 
 awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
-    awful.tag(beautiful.tag or {"1", "2", "3", "4", "5", "6", "7", "8", "9"}, s, awful.layout.layouts[2])
+    -- awful.tag(beautiful.tag or {"1", "2", "3", "4", "5", "6", "7", "8", "9"}, s, awful.layout.layouts[2])
+    awful.tag({"󰅬 "}, s, awful.layout.layouts[2])
+    
+    -- My tags
+    awful.tag.add(beautiful.tag[2], {
+        index = 2,
+        layout  = awful.layout.suit.fair,
+        screen = s
+    })
+    awful.tag.add(beautiful.tag[3], {
+        index = 3,
+        layout  = awful.layout.suit.tile,
+        screen = s
+    })
+    awful.tag.add(beautiful.tag[4], {
+        index = 4,
+        layout  = awful.layout.suit.floating,
+        -- master_fill_policy = "master_width_factor",
+        master_fill_policy = 0.7,
+        screen = s
+    })
+    awful.tag.add(beautiful.tag[5], {
+        index = 5,
+        layout  = awful.layout.suit.tile,
+        screen = s
+    })
+
+    awful.tag.add(beautiful.tag[6], {
+        index = 6,
+        layout  = awful.layout.suit.tile,
+        screen = s
+    })
+    awful.tag.add(beautiful.tag[7], {
+        index = 7,
+        layout  = awful.layout.suit.magnifier,
+        gap_single_client = true,
+        gap = 16,
+        screen = s
+    })
+    awful.tag.add(beautiful.tag[8], {
+        index = 8,
+        layout  = awful.layout.suit.fair,
+        screen = s
+    })
+    awful.tag.add(beautiful.tag[9], {
+        index = 9,
+        layout  = awful.layout.suit.floating,
+        screen = s
+    })
+
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
     s.mylayoutbox = awful.widget.layoutbox(s)
@@ -115,7 +156,7 @@ awful.screen.connect_for_each_screen(function(s)
         screen = s,
         width = screen[1].geometry.width * 0.45,
         height = 34,
-        border_width = 6,
+        border_width = beautiful.border_width,
         shape = custom_shape,
         border_color = "#000000",
         bg = "#ffffff"
@@ -149,31 +190,19 @@ globalkeys = gears.table.join(
     awful.key({modkey}, "Tab",awful.tag.history.restore),
     awful.key({modkey}, "j", function() awful.client.focus.byidx(1) end),
     awful.key({modkey}, "k", function() awful.client.focus.byidx(-1)end),
- -- Layout manipulation
-    
-    awful.key({modkey, "Shift"}, "j", function() awful.client.swap.byidx(1) end,
-        {description = "swap with next client by index", group = "client"}),
-    
-    awful.key({modkey, "Shift"}, "k", function() awful.client.swap.byidx(-1) end,
-        {description = "swap with previous client by index", group = "client"}),
-    
-    awful.key({modkey, "Control"}, "j", function() awful.screen.focus_relative(1) end,
-        {description = "focus the next screen", group = "screen"}),
-    
-    awful.key({modkey, "Control"}, "k", function() awful.screen.focus_relative(-1) end,
-        {description = "focus the previous screen", group = "screen"}),
-    
-    awful.key({modkey}, "u", awful.client.urgent.jumpto,
-        {description = "jump to urgent client", group = "client"}), 
-    
-    awful.key({modkey}, "Tab", function()awful.client.focus.history.previous()if client.focus then client.focus:raise() end end, 
-        {description = "go back", group = "client"}),
+
+    -- Layout manipulation
+    awful.key({modkey, "Shift"}, "j", function() awful.client.swap.byidx(1) end),
+    awful.key({modkey, "Shift"}, "k", function() awful.client.swap.byidx(-1) end),
+    awful.key({modkey, "Control"}, "j", function() awful.screen.focus_relative(1) end),
+    awful.key({modkey, "Control"}, "k", function() awful.screen.focus_relative(-1) end),
+    awful.key({modkey}, "u", awful.client.urgent.jumpto), 
+    awful.key({modkey}, "Tab", function()awful.client.focus.history.previous()if client.focus then client.focus:raise() end end),
 
     --  Brightness % Volume media keys
     awful.key({}, "XF86AudioRaiseVolume", function()awful.spawn.with_shell(
         "export XDG_RUNTIME_DIR=/run/user/$(id -u) && ~/.config/awesome/scripts/volume.sh up")
     end),
-
     awful.key({}, "XF86AudioMute", function()awful.spawn.with_shell(
         "export XDG_RUNTIME_DIR=/run/user/$(id -u) && ~/.config/awesome/scripts/volume.sh mute")
     end),
@@ -207,17 +236,36 @@ globalkeys = gears.table.join(
 
     awful.key({modkey}, "space", function() awful.layout.inc(1) end),
     awful.key({modkey, "Shift"}, "space",function() awful.layout.inc(-1) end),
-    awful.key({modkey, "Control"}, "n", function()local c = awful.client.restore()
-    
-    -- Focus restored client
-    if c then
-        c:emit_signal("request::activate", "key.unminimize", {raise = true})
-    end end),
+
+    -- Strachpad show window
+    awful.key({ modkey, "Shift" }, "s",
+              function ()
+                  local c = awful.client.restore()
+                  -- Focus restored client
+                  if c then
+                    c:emit_signal(
+                        "request::activate", "key.unminimize", {raise = true}
+                    )
+                  end
+              end),
 
     -- Rofi app launcher
     awful.key({"Mod1"}, "F1", function() awful.util.spawn("rofi -show drun") end),
     -- Rofi powermenu 
     awful.key({modkey, "Shift"}, "e", function()awful.util.spawn("sh " .. os.getenv("HOME") .. "/.config/rofi/powermenu.sh")end),
+    -- Rofi wifi
+    awful.key({modkey, "Shift"}, "n", function()awful.util.spawn("sh " .. os.getenv("HOME") .. "/.config/rofi/wifi.sh")end),
+    -- Rofi bluetooth
+    awful.key({modkey, "Shift"}, "b", function()awful.util.spawn("sh " .. os.getenv("HOME") .. "/.config/rofi/bluetooth.sh")end),
+    -- Install package 
+    awful.key({modkey, "Shift"}, "i", function()awful.util.spawn(terminal .. " sh " .. os.getenv("HOME") .. "/.config/awesome/scripts/install.sh")end),
+    -- Remove package
+    awful.key({modkey, "Shift"}, "u", function()awful.util.spawn(terminal .. " sh " .. os.getenv("HOME") .. "/.config/awesome/scripts/remove.sh")end),
+    -- Clear cashe 
+    awful.key({modkey, "Shift"}, "c", function()awful.util.spawn(terminal .. " sh " .. os.getenv("HOME") .. "/.config/awesome/scripts/cashe.sh")end),
+    -- Display toogle 
+    awful.key({modkey, "Shift"}, "d", function()awful.util.spawn(terminal .. " sh " .. os.getenv("HOME") .. "/.config/awesome/scripts/displays_toogle.sh")end),
+
     -- Screenshot
     awful.key({}, "Print", function() awful.spawn.with_shell("flameshot gui") end),
     -- Toogle wibar
@@ -229,18 +277,16 @@ globalkeys = gears.table.join(
         c.fullscreen = not c.fullscreen
         c:raise()
     end),
+
+    -- Strachpad hide window 
+    awful.key({modkey}, "s", function(c) c.minimized = true end),
+
     awful.key({modkey}, "q", function(c) c:kill() end),
     awful.key({modkey, "Control"}, "space", awful.client.floating.toggle),
     awful.key({modkey, "Control"}, "Return", function(c) c:swap(awful.client.getmaster()) end),
     awful.key({modkey}, "o", function(c) c:move_to_screen() end),
     awful.key({modkey}, "t", function(c) c.ontop = not c.ontop end),
-    awful.key({modkey}, "n", function(c)
-        -- The client currently has the input focus, so it cannot be
-        -- minimized, since minimized clients can't have the focus.
-        c.minimized = true
-    end),
-    awful.key({modkey}, "m", function(c)
-    c   .maximized = not c.maximized
+    awful.key({modkey}, "m", function(c) c.maximized = not c.maximized
         c:raise()
     end),
     awful.key({modkey, "Control"}, "m", function(c)
@@ -348,6 +394,20 @@ awful.rules.rules = { -- All clients will match this rule.
         properties = {focusable = false, border_width = 0}
     },
 
+    {
+        rule_any = { class = { "GLava" } },
+        properties = {
+            floating = true,
+            buttons = nil,
+            keys = nil,
+            focusable = false,
+            -- geometry = { height = 300, width = 2560, y = 1440 - 300 + 16 },
+            sticky = true,
+            below = true,
+            titlebars_enabled = false
+        }
+    },
+
     -- Rule to fullscreen apps
     {
         rule_any = {class = {"SafeEyes", "feh", "mpv"}},
@@ -382,11 +442,11 @@ awful.rules.rules = { -- All clients will match this rule.
         },
         properties = {
             tag = beautiful.tag[4],
-            switchtotag = true,
-            floating = true,
-            width = "1376",
-            height = "824",
-            placement = awful.placement.centered
+            switchtotag = true
+            -- floating = true,
+            -- width = "1376",
+            -- height = "824",
+            -- placement = awful.placement.centered
         }
     },
 
@@ -458,13 +518,59 @@ end)
 client.connect_signal("focus",function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus",function(c) c.border_color = beautiful.border_normal end)
 
+-- Helpers
+
 -- Rounded corners for all windows
 client.connect_signal("manage", function(c)
     c.shape = function(cr, w, h)
         gears.shape.rounded_rect(cr, w, h, 18)
     end
 end)
--- }}}
+
+-- If == 1 opened window then floating, else tiled
+TileToogledTags = function(t)
+    if t.name == beautiful.tag[3] or t.name == beautiful.tag[4] or t.name == beautiful.tag[6] or t.name == beautiful.tag[9] then
+        local tab = t
+        c_number = tab:clients()
+        if #c_number == 1 then
+            local c = tab:clients()
+            local geom = screen.primary.geometry
+            c[1].width = math.ceil(geom.width * 0.80)
+            c[1].height = math.ceil(geom.height * 0.85)
+            awful.placement.align(c[1], {position="centered"})
+            t.layout  = awful.layout.suit.floating
+        else if #c_number > 1 then 
+                t.layout = awful.layout.suit.tile
+        end
+        end
+    end
+end
+ 
+FmTag = awful.tag.find_by_name(awful.screen.focused(), beautiful.tag[3])
+KeyTag = awful.tag.find_by_name(awful.screen.focused(), beautiful.tag[4])
+NoteTag = awful.tag.find_by_name(awful.screen.focused(), beautiful.tag[6])
+MediaTag = awful.tag.find_by_name(awful.screen.focused(), beautiful.tag[9])
+
+tag.connect_signal("request::select", function (tag) TileToogledTags(tag) end)  
+tag.connect_signal("tagged", function() TileToogledTags(FmTag) end)
+tag.connect_signal("untagged", function() TileToogledTags(FmTag) end)
+tag.connect_signal("tagged", function() TileToogledTags(KeyTag) end)
+tag.connect_signal("untagged", function() TileToogledTags(KeyTag) end)
+tag.connect_signal("tagged", function() TileToogledTags(NoteTag) end)
+tag.connect_signal("untagged", function() TileToogledTags(NoteTag) end)
+tag.connect_signal("tagged", function() TileToogledTags(MediaTag) end)
+tag.connect_signal("untagged", function() TileToogledTags(MediaTag) end)
+
+-- Run garbage collector regularly to prevent memory leaks
+local function perform_garbage_collection()
+    collectgarbage("incremental", 150, 600, 0)
+end
+
+gears.timer {
+  timeout = 60,
+  autostart = true,
+  callback = function() perform_garbage_collection() end
+}
 
 -- Comand to show app name
 -- xprop | grep WM_CLASS
