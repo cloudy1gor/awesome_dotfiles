@@ -12,8 +12,6 @@ if status is-login
     end
 end
 
-if not functions -q fundle; eval (curl -sfL https://git.io/fundle-install); end
-
 set fish_greeting ""
 
 # theme
@@ -49,6 +47,21 @@ alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 alias :q='exit'
 
+# pomodoro timer
+alias work="timer 30m && notify-send \
+'Pomodoro' 'Work Timer is up! Take a Break 😊' -i \
+~/.cache/pomo/pomo-tomato.png -t 30000 -w -A 'Dismiss'\
+& disown;"
+
+alias rest="timer 10m && notify-send \
+'Pomodoro' 'Break is over! Get back to work 😬' -i \
+~/.cache/pomo/pomo-tomato.png -t 30000 -w -A 'Dismiss'\
+& disown;"
+
+alias x="startx"
+alias p="command yay"
+alias pu="command yay -Syyu --answerclean yes --rebuildall --noconfirm"
+
 #color scheme
 set -U fish_color_param green
 set -U fish_color_command brblue
@@ -75,38 +88,12 @@ set -x -g PIPENV_TIMEOUT 3600
 # NodeJS
 set -gx PATH node_modules/.bin $PATH
 
-# Go
-set -g GOPATH $HOME/go
-set -gx PATH $GOPATH/bin $PATH
-
-# NVM
-function __check_rvm --on-variable PWD --description 'Do nvm stuff'
-  status --is-command-substitution; and return
-
-  if test -f .nvmrc; and test -r .nvmrc;
-    nvm use
-  else
-  end
-end
-
-switch (uname)
-  case Darwin
-    source (dirname (status --current-filename))/config-osx.fish
-  case Linux
-    # Do nothing
-  case '*'
-    source (dirname (status --current-filename))/config-windows.fish
-end
-
-set LOCAL_CONFIG (dirname (status --current-filename))/config-local.fish
-if test -f $LOCAL_CONFIG
-  source $LOCAL_CONFIG
-end
+# Shell prompt
+starship init fish | source
 
 if status --is-interactive
    neofetch
 end
 
 export TERM=xterm-kitty
-
 
