@@ -37,7 +37,8 @@ internal_only() {
 }
 
 both_monitors() {
-    xrandr --output "$internal" --auto --output "$external" --primary --auto --right-of "$internal"
+    # xrandr --output "$internal" --auto --output "$external" --primary --auto --right-of "$internal"
+    xrandr --output "$internal" --primary --mode 1920x1080 --rotate normal --output "$external" --auto --rotate normal --right-of eDP
     sleep 1
     notify-send "Screen info" "Both monitors are active now."
 }

@@ -4,7 +4,6 @@ return {
 
     options = {
     opt = {
-      -- foldcolumn = "0",
       relativenumber = false,
       signcolumn = "auto",
       spell = true,
@@ -20,6 +19,11 @@ return {
           theme = "light", -- "dark" or "light".
         })
       end,
+    },
+
+    {
+      "mattn/emmet-vim",
+      ft = { "html", "css", "javascript", "typescript", "php", "twig" },
     },
 
     {
@@ -45,6 +49,7 @@ return {
           "typescript",
           "php",
           "python",
+          "twig",
         },
       },
     },
@@ -53,6 +58,7 @@ return {
     servers = {
       "bashls",
       "cssls",
+      "emmetls",
       "eslint",
       "html",
       "jsonls",

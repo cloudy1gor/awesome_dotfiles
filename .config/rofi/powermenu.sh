@@ -18,19 +18,19 @@ chosen="$(echo -e "$options" | $rofi_command -p "UP - $uptime" -dmenu -selected-
 case $chosen in
     $shutdown)
     ans=$($HOME/.config/rofi/confirm.sh)
-    if [[ $ans == "yes" ]] || [[ $ans == "YES" ]] || [[ $ans == "y" ]]; then
+    if [[ $ans == "yes" ]] || [[ $ans == "YES" ]] || [[ $ans == "y" ]] || [[ $ans == "н" ]] || [[ $ans == "Н" ]]; then
         systemctl poweroff
-    elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]]; then
+    elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]] || [[ $ans == "т" ]] || [[ $ans == "Т" ]]; then
         exit
         else
             rofi -theme ~/.config/rofi/askpass.rasi
         fi
         ;;
     $reboot)
-    ans=$($HOME/.config/rofi/confirm.sh)
-    if [[ $ans == "yes" ]] || [[ $ans == "YES" ]] || [[ $ans == "y" ]]; then
+    ans=$($HOME/.config/rofi/confirm.sh) 
+    if [[ $ans == "yes" ]] || [[ $ans == "YES" ]] || [[ $ans == "y" ]] || [[ $ans == "н" ]] || [[ $ans == "Н" ]]; then
         systemctl reboot
-    elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]]; then
+    elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]] || [[ $ans == "т" ]] || [[ $ans == "Т" ]]; then    
         exit
         else
             rofi -theme ~/.config/rofi/askpass.rasi
@@ -41,12 +41,12 @@ case $chosen in
         ;;
     $suspend)
     ans=$($HOME/.config/rofi/confirm.sh)
-    if [[ $ans == "yes" ]] || [[ $ans == "YES" ]] || [[ $ans == "y" ]]; then
+    if [[ $ans == "yes" ]] || [[ $ans == "YES" ]] || [[ $ans == "y" ]] || [[ $ans == "н" ]] || [[ $ans == "Н" ]]; then
         mpc -q pause
         amixer set Master mute
         betterlockscreen --suspend
-        #betterlockscreen --suspend -u /usr/share/backgrounds/"$Background"
-    elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]]; then
+        #betterlockscreen --suspend -u /usr/share/backgrounds/"$Background"    
+    elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]] || [[ $ans == "т" ]] || [[ $ans == "Т" ]]; then    
         exit
         else
             rofi -theme ~/.config/rofi/askpass.rasi
@@ -54,9 +54,9 @@ case $chosen in
         ;;
     $logout)
     ans=$($HOME/.config/rofi/confirm.sh)
-    if [[ $ans == "yes" ]] || [[ $ans == "YES" ]] || [[ $ans == "y" ]]; then
+    if [[ $ans == "yes" ]] || [[ $ans == "YES" ]] || [[ $ans == "y" ]] || [[ $ans == "н" ]] || [[ $ans == "Н" ]]; then
         bspc quit
-    elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]]; then
+    elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]] || [[ $ans == "т" ]] || [[ $ans == "Т" ]]; then    
         exit
         else
             rofi -theme ~/.config/rofi/askpass.rasi

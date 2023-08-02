@@ -4,9 +4,9 @@ hours=$(date +%H)
 
 # Check if the current hour is greater than or equal to 17 (5 PM) or less than 9 (9 AM)
 if (( hours >= 17 || hours < 9 )); then
-    restart=( "redshift" "-P" "-O" "4700" )
-else
-    restart=( )
+    restart=( "redshift" "-P" "-O" "4200" )
+else 
+    restart=( "redshift" "-P" "-O" "5000" )
 fi
 
 declare -a apps=( "/usr/bin/dunst" "copyq" "megasync" "telegram-desktop" "safeeyes" "espanso" )
