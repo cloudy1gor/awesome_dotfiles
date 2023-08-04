@@ -22,6 +22,10 @@ separator.forced_width = 10
 local separator_text = wibox.widget.textbox(")")
 separator_text.font = "JetBrainsMono Nerd Font 26"
 
+-- Displays names
+local display_internal = "eDP"
+local display_external = "HDMI-A-0"
+
 -- Set rounded corners
 function custom_shape(cr, width, height)
     gears.shape.rounded_rect(cr, width, height, 18)
@@ -276,11 +280,12 @@ globalkeys = gears.table.join(
     -- Clear cashe
     awful.key({ modkey, "Shift" }, "c",
         function() awful.util.spawn(terminal .. " sh " .. os.getenv("HOME") .. "/.config/awesome/scripts/cashe.sh") end),
+
     -- Display toogle
     awful.key({ modkey, "Shift" }, "d",
         function()
-            awful.util.spawn(terminal ..
-                " sh " .. os.getenv("HOME") .. "/.config/awesome/scripts/displays_toogle.sh")
+            awful.spawn.with_shell(gears.filesystem.get_configuration_dir() ..
+                "scripts/display_toggle.sh " .. display_internal .. " " .. display_external)
         end),
 
     -- Screenshot
@@ -396,20 +401,25 @@ awful.rules.rules = { -- All clients will match this rule.
                 },
                 class = {
                     "Arandr", "Blueman-manager", "Gpick", "Kruler", "MessageWin", -- kalarm.
-                    "Sxiv",
-                    "Tor Browser",                                                -- Needs a fixed window size to avoid fingerprinting by screen size.
-                    "Wpa_gui", "veromix", "Pavucontrol", "xtightvncviewer"
+                    "Sxiv", "Wpa_gui", "veromix", "xtightvncviewer", "confirm",
+                    "confirmreset", "dialog", "download", "error", "file_progress",
+                    "Gnome-screenshot", "makebranch", "maketag", "notification",
+                    "Pavucontrol", "splash", "ssh-askpass", "toolbar"
                 },
 
                 -- Note that the name property shown in xprop might be set slightly after creation of the client
                 -- and the name shown there might not match defined rules here.
                 name = {
-                    "Event Tester" -- xev.
-                },
+                    "Event Tester", -- xev.
+                    "Authentication", "branchdialog", "Chat", "pinentry", "Polls" },
                 role = {
                     "AlarmWindow",   -- Thunderbird's calendar.
                     "ConfigManager", -- Thunderbird's about:config.
-                    "pop-up"         -- e.g. Google Chrome's (detached) Developer Tools.
+                    "pop-up",        -- e.g. Google Chrome's (detached) Developer Tools.
+                    "conversation", "utility", "notificion", "toolbar", "splash", "dialog"
+                },
+                type = {
+                    "dialog",
                 }
             },
             properties = {
@@ -443,7 +453,13 @@ awful.rules.rules = { -- All clients will match this rule.
         -- Rule to fullscreen apps
         {
             rule_any = { class = { "SafeEyes", "feh", "mpv" } },
-            properties = { screen = 1, fullscreen = true }
+            properties = { screen = 1, fullscreen = true },
+            callback = function(c)
+                -- When a fullscreen app is managed, remove the rounded corners
+                c.shape = function(cr, w, h)
+                    gears.shape.rectangle(cr, w, h)
+                end
+            end
         },
 
         {
@@ -456,9 +472,9 @@ awful.rules.rules = { -- All clients will match this rule.
                     "Google-chrome",
                     "Brave-browser"
                 },
-                role = {
-                    "browser"
-                }
+                -- role = {
+                --     "browser"
+                -- }
             },
             properties = { tag = beautiful.tag[2], switchtotag = true }
         },
@@ -470,7 +486,10 @@ awful.rules.rules = { -- All clients will match this rule.
 
         {
             rule_any = {
-                class = { "KeePassXC", "VeraCrypt", "tor-browser", "qBittorrent" }
+                instance = {
+                    "htop",
+                },
+                class = { "KeePassXC", "VeraCrypt", "tor-browser", "qBittorrent", "htop", "gotop" }
             },
             properties = {
                 tag = beautiful.tag[4],
@@ -484,26 +503,37 @@ awful.rules.rules = { -- All clients will match this rule.
 
         {
             rule_any = {
-                {
-                    instance = "telegram-desktop",
-                    class = { "TelegramDesktop", "discord", "Zoom", "Skype" }
-                },
+                class = { "Slack", "TelegramDesktop", "discord", "Zoom", "Skype" },
             },
             properties = {
                 screen = 1,
                 tag = beautiful.tag[5],
-                switchtotag = true,
-                floating = function(c)
-                    if c.instance == "telegram-desktop" or c.class == "TelegramDesktop" then
-                        return true
-                    end
-                    return false
-                end,
-                width = 420,
-                height = 900,
-                placement = awful.placement.right
-            }
+                switchtotag = true
+            },
         },
+
+        -- {
+        --     rule_any = {
+        --         {
+        --             instance = { "telegram-desktop", },
+        --             class = { "TelegramDesktop", "discord", "Zoom", "Skype" }
+        --         },
+        --     },
+        --     properties = {
+        --         screen = 1,
+        --         tag = beautiful.tag[5],
+        --         switchtotag = true,
+        --         -- floating = function(c)
+        --         --     if c.instance == "telegram-desktop" or c.class == "TelegramDesktop" then
+        --         --         return true
+        --         --     end
+        --         --     return false
+        --         -- end,
+        --         width = 420,
+        --         height = 900,
+        --         placement = awful.placement.right
+        --     }
+        -- },
 
         {
             rule_any = { class = { "Obsidian" } },
@@ -511,8 +541,25 @@ awful.rules.rules = { -- All clients will match this rule.
         },
 
         {
-            rule_any = { class = { "Code", "code-oss", "jetbrains-phpstorm" } },
+            rule_any = { class = { "Code", "code-oss", "jetbrains-phpstorm", "jetbrains-idea" } },
             properties = { screen = 1, tag = beautiful.tag[8], switchtotag = true }
+        },
+
+        -- Fixed terminal geometry for floating terminals
+        {
+            rule_any = {
+                class = {
+                    "mpv",
+                    "kitty",
+                    "st-256color",
+                    "st",
+                    "URxvt",
+                },
+            },
+            properties = {
+                width = awful.screen.focused().geometry.width * 0.45,
+                height = awful.screen.focused().geometry.height * 0.5
+            }
         }
 
     },
@@ -534,13 +581,12 @@ awful.rules.rules = { -- All clients will match this rule.
 -- Autostart
 awful.spawn.with_shell("ksuperkey -e 'Super_L=Alt_L|F1' & ksuperkey -e 'Super_R=Alt_L|F1'")
 awful.spawn.with_shell("feh --bg-scale --randomize --no-fehbg ~/Pictures/Wallpapers/*")
--- awful.spawn.with_shell("~/.config/awesome/scripts/displays_toogle.sh")
 -- awful.spawn.with_shell("picom -CGb --config ~/.config/picom.conf")
 awful.spawn.with_shell("~/.config/polybar/launch.sh")
 awful.spawn.with_shell("~/.config/awesome/scripts/autostart.sh")
 awful.spawn.with_shell("~/.config/awesome/scripts/volume.sh")
 awful.spawn.with_shell("~/.config/awesome/scripts/brightness.sh")
--- awful.spawn.with_shell("~/.config/awesome/scripts/battery_monitor.sh")
+awful.spawn.with_shell("~/.config/awesome/scripts/battery_monitor.sh")
 
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)

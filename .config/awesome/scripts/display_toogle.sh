@@ -13,8 +13,8 @@
 # When laptop lid is closed only external monitor is active
 # When external monitor is disconnected only internal monitor is active
 
-internal="eDP"
-external="HDMI-A-0"
+internal= "$1"
+external= "$2"
 
 if [ -z "$internal" ] || [ -z "$external" ]; then
     notify-send "Screen info" "You must set monitor names in settings.lua"
@@ -37,7 +37,6 @@ internal_only() {
 }
 
 both_monitors() {
-    # xrandr --output "$internal" --auto --output "$external" --primary --auto --right-of "$internal"
     xrandr --output "$internal" --primary --mode 1920x1080 --rotate normal --output "$external" --auto --rotate normal --right-of eDP
     sleep 1
     notify-send "Screen info" "Both monitors are active now."
