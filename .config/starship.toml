@@ -39,23 +39,23 @@ format = '[[($all_status$ahead_behind )](fg:#000000 bg:#a3aed2)]($style)'
 
 [nodejs]
 symbol = ""
-style = "bg:#a3aed2"
-format = '[[ $symbol ($version) ](fg:#000000 bg:#a3aed2)]($style)'
+style = "bg:#c9c9c9"
+format = '[[ $symbol ($version) ](fg:#000000 bg:#c9c9c9)]($style)'
 
 [rust]
 symbol = ""
-style = "bg:#a3aed2"
-format = '[[ $symbol ($version) ](fg:#000000 bg:#a3aed2)]($style)'
+style = "bg:#c9c9c9"
+format = '[[ $symbol ($version) ](fg:#000000 bg:#c9c9c9)]($style)'
 
 [golang]
 symbol = ""
-style = "bg:#a3aed2"
-format = '[[ $symbol ($version) ](fg:#000000 bg:#a3aed2)]($style)'
+style = "bg:#c9c9c9"
+format = '[[ $symbol ($version) ](fg:#000000 bg:#c9c9c9)]($style)'
 
 [php]
 symbol = ""
-style = "bg:#a3aed2"
-format = '[[ $symbol ($version) ](fg:#000000 bg:#a3aed2)]($style)'
+style = "bg:#c9c9c9"
+format = '[[ $symbol ($version) ](fg:#000000 bg:#c9c9c9)]($style)'
 
 [time]
 disabled = false
