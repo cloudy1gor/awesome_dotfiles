@@ -9,7 +9,7 @@ else
     restart=( "redshift" "-P" "-O" "5000" )
 fi
 
-declare -a apps=( "/usr/bin/dunst" "copyq" "megasync" "telegram-desktop" "safeeyes" "espanso" )
+declare -a apps=( "/usr/bin/dunst" "copyq" "megasync" "telegram-desktop" "safeeyes" "espanso" "glava" )
 
 for app in "${apps[@]}"; do
     if [[ $(pidof "${app}") ]]; then

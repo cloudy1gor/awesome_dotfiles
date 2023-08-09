@@ -6,7 +6,7 @@ Xft.autohint:    false
 Xft.hintstyle:   hintfull
 Xft.lcdfilter:   lcddefault
 
-! Search font:: fc-list | grep "JetBrains Mono"
+! Comand for search font:: fc-list | grep "JetBrains Mono"
 *.font: xft:JetBrainsMono Nerd Font:style=Medium,Regular:size=12
 
 Xcursor.theme: capitaine-cursors

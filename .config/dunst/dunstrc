@@ -70,19 +70,19 @@ format = "Discord\n%s\n%b"
 	 frame_color="#A3BE8C"
 
 [urgency_low]
-	background  = "#ECEFF4"
+	background  = "#ffffff"
 	foreground  = "#2E3440"
 	timeout     = 4
 	icon        = "/home/clo/.config/dunst/icons/030-notification bell.svg" 
 
 [urgency_normal]
-	background  = "#ECEFF4"
+	background  = "#ffffff"
 	foreground  = "#2E3440"
 	timeout = 4
 	icon        = "/home/clo/.config/dunst/icons/030-notification bell.svg" 
 
 [urgency_critical]
-	background  = "#ECEFF4"
+	background  = "#ffffff"
 	foreground  = "#2E3440"
 	timeout = 4
 	icon        = "/home/clo/.config/dunst/icons/030-notification bell.svg" 

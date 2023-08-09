@@ -162,8 +162,8 @@ awful.screen.connect_for_each_screen(function(s)
         height = 34,
         border_width = beautiful.border_width,
         shape = custom_shape,
-        border_color = "#000000",
-        bg = "#ffffff"
+        border_color = beautiful.border_focus,
+        bg = beautiful.bg_focus
     })
 
     -- Add widgets to the wibox
@@ -433,20 +433,29 @@ awful.rules.rules = { -- All clients will match this rule.
         -- Rule to make Polybar windows non-focusable
         {
             rule_any = { class = { "Polybar" } },
-            properties = { focusable = false, border_width = 0 }
+            properties = {
+                focusable = false,
+                border_width = 0,
+                above = false
+            }
         },
 
         {
-            rule_any = { class = { "GLava" } },
+            rule_any = {
+                type = { "glava" },
+                class = { "GLava" }
+            },
             properties = {
                 floating = true,
                 buttons = nil,
                 keys = nil,
                 focusable = false,
-                -- geometry = { height = 300, width = 2560, y = 1440 - 300 + 16 },
+                geometry = { height = 300, width = 2560, y = 1440 - 300 + 16 },
                 sticky = true,
                 below = true,
-                titlebars_enabled = false
+                titlebars_enabled = false,
+                border_width = 0,
+                skip_decoration = true
             }
         },
 
@@ -465,6 +474,8 @@ awful.rules.rules = { -- All clients will match this rule.
         {
             rule_any = {
                 name = {
+                    "firefox",
+                    "Tor Browser",
                     "LibreWolf",
                     "qutebrowser",
                     "Vivaldi-stable",
@@ -480,7 +491,16 @@ awful.rules.rules = { -- All clients will match this rule.
         },
 
         {
-            rule_any = { class = { "Thunar" } },
+            rule_any = {
+                class = {
+                    "dolphin",
+                    "pcmanfm-qt",
+                    "ark",
+                    "Nemo",
+                    "File-roller",
+                    "Thunar"
+                }
+            },
             properties = { tag = beautiful.tag[3], switchtotag = true }
         },
 
@@ -508,32 +528,19 @@ awful.rules.rules = { -- All clients will match this rule.
             properties = {
                 screen = 1,
                 tag = beautiful.tag[5],
+                --      floating = function(c)
+                --          if c.instance == "telegram-desktop" or c.class == "TelegramDesktop" then
+                --              return true
+                --              end
+                --          return false
+                --      end,
+                --      width = 420,
+                --      height = 900,
+                --      placement = awful.placement.right
+
                 switchtotag = true
             },
         },
-
-        -- {
-        --     rule_any = {
-        --         {
-        --             instance = { "telegram-desktop", },
-        --             class = { "TelegramDesktop", "discord", "Zoom", "Skype" }
-        --         },
-        --     },
-        --     properties = {
-        --         screen = 1,
-        --         tag = beautiful.tag[5],
-        --         switchtotag = true,
-        --         -- floating = function(c)
-        --         --     if c.instance == "telegram-desktop" or c.class == "TelegramDesktop" then
-        --         --         return true
-        --         --     end
-        --         --     return false
-        --         -- end,
-        --         width = 420,
-        --         height = 900,
-        --         placement = awful.placement.right
-        --     }
-        -- },
 
         {
             rule_any = { class = { "Obsidian" } },

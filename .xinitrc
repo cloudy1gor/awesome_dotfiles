@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Configure display settings if needed
-# xrandr --output 
+xrandr --output eDP --primary --mode 1920x1080 --rotate normal --output HDMI-A-0 --auto --rotate normal --right-of eDP &
 
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
