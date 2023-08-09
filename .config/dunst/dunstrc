@@ -73,19 +73,19 @@ format = "Discord\n%s\n%b"
 	background  = "#ffffff"
 	foreground  = "#2E3440"
 	timeout     = 4
-	icon        = "/home/clo/.config/dunst/icons/030-notification bell.svg" 
+	icon        = "~/.config/dunst/icons/bell.svg" 
 
 [urgency_normal]
 	background  = "#ffffff"
 	foreground  = "#2E3440"
 	timeout = 4
-	icon        = "/home/clo/.config/dunst/icons/030-notification bell.svg" 
+	icon        = "~/.config/dunst/icons/bell.svg" 
 
 [urgency_critical]
 	background  = "#ffffff"
 	foreground  = "#2E3440"
 	timeout = 4
-	icon        = "/home/clo/.config/dunst/icons/030-notification bell.svg" 
+	icon        = "~/.config/dunst/icons/bell.svg" 
 
 
 [Youtube Music]
