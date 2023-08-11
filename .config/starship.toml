@@ -6,11 +6,14 @@ $directory\
 [](fg:#769ff0 bg:#a3aed2)\
 $git_branch\
 $git_status\
+$git_state\
 [](fg:#a3aed2 bg:#c9c9c9)\
 $nodejs\
 $rust\
 $golang\
 $php\
+$python\
+$docker_context\
 [](fg:#c9c9c9 bg:#6c7a89)\
 $time\
 [ ](fg:#6c7a89)\
@@ -36,6 +39,38 @@ format = '[[ $symbol $branch ](fg:#000000 bg:#a3aed2)]($style)'
 [git_status]
 style = "bg:#a3aed2"
 format = '[[($all_status$ahead_behind )](fg:#000000 bg:#a3aed2)]($style)'
+conflicted = "="
+ahead =	"⇡${count} "
+behind = "⇣${count} "
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+untracked = "?${count} "
+stashed = "$${count} "
+modified = "!${count} "
+staged = "+${count} "
+renamed = "»${count} "
+deleted = "✘${count} "
+disabled = false
+
+[git_state]
+rebase = "REBASING"
+merge =	"MERGING"
+revert = "REVERTING"
+cherry_pick = "CHERRY-PICKING"
+bisect = "BISECTING"
+am = "AM"
+am_or_rebase = "AM/REBASE"
+style =	"bold yellow"
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+disabled = false
+
+[status]
+format = "[$symbol$status]($style)"
+symbol = "✖"
+style = "bold red"
+disabled = true
+
+[docker_context]
+symbol = " "
 
 [nodejs]
 symbol = ""
@@ -56,6 +91,9 @@ format = '[[ $symbol ($version) ](fg:#000000 bg:#c9c9c9)]($style)'
 symbol = ""
 style = "bg:#c9c9c9"
 format = '[[ $symbol ($version) ](fg:#000000 bg:#c9c9c9)]($style)'
+
+[python]
+symbol = " "
 
 [time]
 disabled = false

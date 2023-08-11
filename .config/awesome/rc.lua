@@ -101,9 +101,11 @@ awful.screen.connect_for_each_screen(function(s)
     })
 
     awful.tag.add(beautiful.tag[6], {
-        index  = 6,
-        layout = awful.layout.suit.tile,
-        screen = s
+        index             = 6,
+        layout            = awful.layout.suit.tile,
+        gap_single_client = true,
+        gap               = 16,
+        screen            = s
     })
     awful.tag.add(beautiful.tag[7], {
         index             = 7,
@@ -543,8 +545,12 @@ awful.rules.rules = { -- All clients will match this rule.
         },
 
         {
-            rule_any = { class = { "Obsidian" } },
-            properties = { screen = 1, tag = beautiful.tag[6], switchtotag = true }
+            rule_any = { class = { "obsidian" } },
+            properties = {
+                screen = 1,
+                tag = beautiful.tag[6],
+                switchtotag = true
+            }
         },
 
         {
@@ -591,8 +597,6 @@ awful.spawn.with_shell("feh --bg-scale --randomize --no-fehbg ~/Pictures/Wallpap
 -- awful.spawn.with_shell("picom -CGb --config ~/.config/picom.conf")
 awful.spawn.with_shell("~/.config/polybar/launch.sh")
 awful.spawn.with_shell("~/.config/awesome/scripts/autostart.sh")
-awful.spawn.with_shell("~/.config/awesome/scripts/volume.sh")
-awful.spawn.with_shell("~/.config/awesome/scripts/brightness.sh")
 awful.spawn.with_shell("~/.config/awesome/scripts/battery_monitor.sh")
 
 -- Enable sloppy focus, so that focus follows mouse.
@@ -614,7 +618,7 @@ end)
 
 -- If == 1 opened window then floating, else tiled
 TileToogledTags = function(t)
-    if t.name == beautiful.tag[3] or t.name == beautiful.tag[4] or t.name == beautiful.tag[6] or t.name == beautiful.tag[9] then
+    if t.name == beautiful.tag[3] or t.name == beautiful.tag[4] or t.name == beautiful.tag[9] then
         local tab = t
         c_number = tab:clients()
         if #c_number == 1 then
