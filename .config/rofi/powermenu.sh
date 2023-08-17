@@ -14,12 +14,12 @@ logout="󰍃"
 # Variable passed to rofi
 options="$shutdown\n$reboot\n$lock\n$suspend\n$logout"
 
-chosen="$(echo -e "$options" | $rofi_command -p "UP - $uptime" -dmenu -selected-row 2)"
+chosen="$(echo "$options" | $rofi_command -p "UP - $uptime" -dmenu -selected-row 2)"
 case $chosen in
     $shutdown)
     ans=$($HOME/.config/rofi/confirm.sh)
     if [[ $ans == "yes" ]] || [[ $ans == "YES" ]] || [[ $ans == "y" ]] || [[ $ans == "н" ]] || [[ $ans == "Н" ]]; then
-        systemctl poweroff
+        sudo poweroff
     elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]] || [[ $ans == "т" ]] || [[ $ans == "Т" ]]; then
         exit
         else
@@ -29,7 +29,7 @@ case $chosen in
     $reboot)
     ans=$($HOME/.config/rofi/confirm.sh) 
     if [[ $ans == "yes" ]] || [[ $ans == "YES" ]] || [[ $ans == "y" ]] || [[ $ans == "н" ]] || [[ $ans == "Н" ]]; then
-        systemctl reboot
+        reboot
     elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]] || [[ $ans == "т" ]] || [[ $ans == "Т" ]]; then    
         exit
         else

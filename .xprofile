@@ -1,3 +1,11 @@
+# Dbus session
+export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus
+
+# Set default screen brightness
+brightnessctl set 10% &
+
+# Start pipewire session
+dbus-run-session pipewire &
 
 # Java Applications
 wmname LG3D &

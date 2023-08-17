@@ -2,6 +2,8 @@ return {
   -- Set colorscheme to use
   colorscheme = "onenord",
 
+  vim.opt.clipboard:append "unnamedplus",
+
     options = {
     opt = {
       relativenumber = false,
@@ -24,6 +26,22 @@ return {
     {
       "mattn/emmet-vim",
       ft = { "html", "css", "javascript", "typescript", "php", "twig" },
+    },
+
+    {
+      "chentoast/marks.nvim",
+      as = "marks",
+      config = function()
+        require('marks').setup({
+          mappings = {
+            set_next = "m,",
+            next = "m]",
+            preview = "m:",
+            set_bookmark0 = "m0",
+            prev = false -- pass false to disable only this default mapping
+          }
+        })
+      end,
     },
 
     {
