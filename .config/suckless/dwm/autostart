@@ -1,9 +1,0 @@
-#!/bin/bash
-
-/usr/bin/dunst &
-copyq & megasync &
-telegram-desktop &
-safeeyes &
-espanso &
-glava &
-
