@@ -16,17 +16,10 @@ static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_empty, col_bg, col_bg },
 	[SchemeSel]  = { col_dark, col_bg,  col_ac  },
-	
-	/* [patch]:colorbar */
-	// [SchemeStatus]  = { col_gray3, col_gray1,  "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
-	// [SchemeTagsSel]  = { col_ac, col_bg, col_dark  }, // Tagbar left selected {text,background,not used but cannot be empty}
-	// [SchemeTagsNorm]  = { col_empty, col_bg, col_dark  }, // Tagbar left unselected {text,background,not used but cannot be empty}
-	// [SchemeInfoSel]  = { col_dark, col_bg,  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
-	// [SchemeInfoNorm]  = { col_dark, col_bg,  "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
 };
 
-/* tagging */
-static const char *tags[] = { "󰅬", "", "", "󰡛", "", "", "", "󰨞", "" };
+/* tagging  󰇥 󰈸 󰍳  */
+static const char *tags[] = { "󰅬", "", "", "", "", "", "", "󰨞", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -122,11 +115,14 @@ static const Key keys[] = {
 	{ 0, 														0x1008ff13,		 spawn, 		 SHCMD("~/.local/bin/volume.sh up") },
 	{ 0, 														0x1008ff11,		 spawn, 		 SHCMD("~/.local/bin/volume.sh down") },
 	{ 0, 														0x1008ff12,		 spawn, 		 SHCMD("~/.local/bin/volume.sh mute") },
+  // { MODKEY,              					XK_F4,      	 spawn, 		 SHCMD("~/.local/bin/temperature.sh cooler") },
+  // { MODKEY,             					XK_F3,      	 spawn, 		 SHCMD("~/.local/bin/temperature.sh warmer") },
 
 	/* Apps */
 	{ 0,                       			XK_Print, 		 spawn,      SHCMD("flameshot gui") },
 	{ MODKEY,                       XK_w, 		 		 spawn,      SHCMD("qutebrowser") },
 	{ MODKEY,                       XK_n, 		 		 spawn,      SHCMD("kitty nvim") },
+
 	/* Wallpapers chager */
 	{ MODKEY|ShiftMask,             XK_w, 		 		 spawn,      SHCMD("feh --bg-scale --randomize --no-fehbg ~/Pictures/Wallpapers/*") },
 };
@@ -134,6 +130,7 @@ static const Key keys[] = {
 /* [patch]: Autostart apps */
 static const char *const autostart[] = {
     "sh", "-c", "~/.local/bin/autostart.sh", NULL,
+    "sh", "-c", "~/.local/bin/battery_monitor.sh", NULL,
     NULL
 };
 
