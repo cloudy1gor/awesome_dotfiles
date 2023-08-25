@@ -2,8 +2,14 @@ int
 width_tags(Bar *bar, BarArg *a)
 {
 	int w, i;
+	Client *c;
+	unsigned int occ = 0;
+	for (c = bar->mon->clients; c; c = c->next)
+		occ |= c->tags == 255 ? 0 : c->tags;
 
 	for (w = 0, i = 0; i < NUMTAGS; i++) {
+		if (!(occ & 1 << i || bar->mon->tagset[bar->mon->seltags] & 1 << i))
+			continue;
 		w += TEXTW(tagicon(bar->mon, i));
 	}
 	return w;
@@ -20,11 +26,14 @@ draw_tags(Bar *bar, BarArg *a)
 	Monitor *m = bar->mon;
 
 	for (c = m->clients; c; c = c->next) {
-		occ |= c->tags;
+		occ |= c->tags == 255 ? 0 : c->tags;
 		if (c->isurgent)
 			urg |= c->tags;
 	}
 	for (i = 0; i < NUMTAGS; i++) {
+		/* do not draw vacant tags */
+		if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
+			continue;
 
 		icon = tagicon(bar->mon, i);
 		invert = 0;
@@ -38,8 +47,6 @@ draw_tags(Bar *bar, BarArg *a)
 		]);
 		drw_text(drw, x, a->y, w, a->h, lrpad / 2, icon, invert, False);
 		drawindicator(m, NULL, occ, x, a->y, w, a->h, i, -1, invert, tagindicatortype);
-		if (ulineall || m->tagset[m->seltags] & 1 << i)
-			drw_rect(drw, x + ulinepad, bh - ulinestroke - ulinevoffset, w - (ulinepad * 2), ulinestroke, 1, 0);
 		x += w;
 	}
 
@@ -50,8 +57,14 @@ int
 click_tags(Bar *bar, Arg *arg, BarArg *a)
 {
 	int i = 0, x = 0;
+	Client *c;
+	unsigned int occ = 0;
+	for (c = bar->mon->clients; c; c = c->next)
+		occ |= c->tags == 255 ? 0 : c->tags;
 
 	do {
+		if (!(occ & 1 << i || bar->mon->tagset[bar->mon->seltags] & 1 << i))
+			continue;
 		x += TEXTW(tagicon(bar->mon, i));
 	} while (a->x >= x && ++i < NUMTAGS);
 	if (i < NUMTAGS) {

@@ -14,9 +14,11 @@
 /* Other patches */
 #include "attachx.c"
 #include "cool_autostart.c"
+#include "floatpos.c"
 #include "movestack.c"
 #include "pertag.c"
 #include "scratchpad.c"
+#include "swallow.c"
 #include "vanitygaps.c"
 #include "warp.c"
 /* Layouts */

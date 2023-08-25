@@ -43,7 +43,7 @@ XRENDER = -lXrender
 #YAJLINC = -I/usr/include/yajl
 
 # Uncomment this for the rounded corners patch / ROUNDED_CORNERS_PATCH
-#XEXTLIB = -lXext
+XEXTLIB = -lXext
 
 # Uncomment this for the swallow patch / SWALLOW_PATCH
 #XCBLIBS = -lX11-xcb -lxcb -lxcb-res
@@ -64,7 +64,7 @@ CPPFLAGS = -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE=700L -DVERSION=\"${VE
 #CFLAGS   = -g -std=c99 -pedantic -Wall -O0 ${INCS} ${CPPFLAGS}
 CFLAGS   = -std=c99 -pedantic -Wall -Wno-unused-function -Wno-deprecated-declarations -Os ${INCS} ${CPPFLAGS}
 # LDFLAGS  = ${LIBS}
-LDFLAGS = -L/usr/X11R6/lib -lX11 -lXinerama -lfontconfig -lXft -lXrender -lX11-xcb -lxcb -lxcb-res -lImlib2
+LDFLAGS = -L/usr/X11R6/lib -lX11 -lXinerama -lfontconfig -lXft -lXrender -lX11-xcb -lxcb -lxcb-res -lImlib2 -lXext
 
 # Solaris
 #CFLAGS = -fast ${INCS} -DVERSION=\"${VERSION}\"

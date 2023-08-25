@@ -1,22 +1,37 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
+
+/* [patch]: bar border */
+static const unsigned int barborderpx    = 4;  /* border pixel of bar */
+
 static const unsigned int borderpx       = 4;   /* border pixel of windows */
+
 static const unsigned int snap           = 32;  /* snap pixel */
 static const int showbar                 = 1;   /* 0 means no bar */
 static const int topbar                  = 1;   /* 0 means bottom bar */
+
+/* [patch]: swallow */
+static const int swallowfloating         = 0;   /* 1 means swallow floating windows by default */
+static const int riodraw_matchpid        = 1;  /* 0 or 1, indicates whether to match the PID of the client that was spawned with riospawn */
+
 static const int vertpad                 = 6;  /* vertical padding of bar */
-static const int sidepad                 = 10;  /* horizontal padding of bar */
+static const int sidepad                 = 6;  /* horizontal padding of bar */
 #define ICONSIZE 24    /* icon size */
 #define ICONSPACING 5  /* space between icon and title */
 /* Status is to be shown on: -1 (all monitors), 0 (a specific monitor by index), 'A' (active monitor) */
+
+/* [patch]: floating position */
+static int floatposgrid_x                = 5;  /* float grid columns */
+static int floatposgrid_y                = 5;  /* float grid rows */
+
 static const int horizpadbar             = 0;   /* horizontal padding for statusbar */
 static const int vertpadbar              = 2;   /* vertical padding for statusbar */
 static const int statusmon               = 'A';
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int showsystray             = 1;   /* 0 means no systray */
-static const unsigned int ulinepad = 5;         /* horizontal padding between the underline and tag */
-static const unsigned int ulinestroke  = 4;     /* thickness / height of the underline */
+static const unsigned int ulinepad = 2;         /* horizontal padding between the underline and tag */
+static const unsigned int ulinestroke  = 0;     /* thickness / height of the underline */
 static const unsigned int ulinevoffset = 0;     /* how far above the bottom of the bar the line should appear */
 static const int ulineall = 0;                  /* 1 to show underline on all tags, 0 for just the active ones */
 
@@ -55,7 +70,8 @@ static char titleselbgcolor[]            = "#ffffff";
 static char titleselbordercolor[]        = "#6C7A89";
 static char titleselfloatcolor[]         = "#005577";
 
-static char tagsnormfgcolor[]            = "#c8c8c8";
+// static char tagsnormfgcolor[]            = "#c8c8c8";
+static char tagsnormfgcolor[]            = "#6C7A89";
 static char tagsnormbgcolor[]            = "#ffffff";
 static char tagsnormbordercolor[]        = "#6C7A89";
 static char tagsnormfloatcolor[]         = "#005577";
@@ -67,7 +83,7 @@ static char tagsselfloatcolor[]          = "#005577";
 
 static char hidnormfgcolor[]             = "#005577";
 static char hidselfgcolor[]              = "#227799";
-static char hidnormbgcolor[]             = "#222222";
+static char hidnormbgcolor[]             = "#ffffff";
 static char hidselbgcolor[]              = "#222222";
 
 static char urgfgcolor[]                 = "#ff0000";
@@ -105,9 +121,13 @@ static Sp scratchpads[] = {
  */
 static char *tagicons[][NUMTAGS] =
 {
-	[DEFAULT_TAGS]        = { "󰅬", "", "", "", "", "", "", "󰨞", "" },
-	[ALTERNATIVE_TAGS]    = { "A", "B", "C", "D", "E", "F", "G", "H", "I" },
-	[ALT_TAGS_DECORATION] = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" },
+	// [DEFAULT_TAGS]        = { "󰅬", "", "", "", "", "", "", "󰨞", "" },
+	[DEFAULT_TAGS]        = { "", "󰊯", "", "", "󱋊", "󱇨", "󰘦", "󱀫", "󰎅" },
+	// [DEFAULT_TAGS]        = { "󰎥", "󰎨", "󰎫", "󰎲", "󰎯", "󰎴", "󰎷", "󰎺", "󰎽" },
+	// [ALTERNATIVE_TAGS]    = { "󰎥 ", "󰼐 ", "󰎫 ", "󰼒 ", "󰎯 ", "󰼔 ", "󰎷 ", "󰼖 ", "󰎽 " },
+	// [ALT_TAGS_DECORATION] = { "󰼏", "󰼐", "󰼑", "󰼒", "󰼓", "󰼔", "󰼕", "󰼖", "󰼗" },
+	[ALT_TAGS_DECORATION] = { "󰅬", "", "", "", "󰭹", "󰷈", "", "󰨞", "󰎄" },
+
 };
 
 
@@ -176,7 +196,7 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
+	{ "[T]",      tile },    /* first entry is default */
 	{ "[F]",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 };
@@ -227,8 +247,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_grave,      togglescratch,          {.ui = 0 } },
 	{ MODKEY|ControlMask,           XK_grave,      setscratch,             {.ui = 0 } },
 	{ MODKEY|ShiftMask,             XK_grave,      removescratch,          {.ui = 0 } },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~SPTAGMASK } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~SPTAGMASK } },
+	{ Mod1Mask,                     XK_0,      view,           {.ui = ~SPTAGMASK } },
+	{ Mod1Mask|ShiftMask,           XK_0,      tag,            {.ui = ~SPTAGMASK } },
 
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
@@ -281,7 +301,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_w, 		 		 spawn,      SHCMD("feh --bg-scale --randomize --no-fehbg ~/Pictures/Wallpapers/*") },
 };
 
-/* [patch]: Autostart apps */
+/* [patch]: Cool Autostart apps */
 static const char *const autostart[] = {
     "sh", "-c", "~/.local/bin/autostart.sh", NULL,
     "sh", "-c", "~/.local/bin/battery_monitor.sh", NULL,
