@@ -26,7 +26,7 @@ static int floatposgrid_x                = 5;  /* float grid columns */
 static int floatposgrid_y                = 5;  /* float grid rows */
 
 static const int horizpadbar             = 0;   /* horizontal padding for statusbar */
-static const int vertpadbar              = 2;   /* vertical padding for statusbar */
+static const int vertpadbar              = 0;   /* vertical padding for statusbar */
 static const int statusmon               = 'A';
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int showsystray             = 1;   /* 0 means no systray */
@@ -38,7 +38,7 @@ static const int ulineall = 0;                  /* 1 to show underline on all ta
 static const unsigned int gappih    = 8;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 6;       /* vert inner gap between windows */
 static const unsigned int gappoh    = 8;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 6;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappov    = 4;       /* vert outer gap between windows and screen edge */
 static const int smartgaps_fact          = 1;        /* 1 means no outer gap when there is only one window */
 
 /* Indicators: see patch/bar_indicators.h for options */
@@ -104,21 +104,16 @@ static char *colors[][ColCount] = {
 	[SchemeUrg]          = { urgfgcolor,       urgbgcolor,       urgbordercolor,       urgfloatcolor },
 };
 
-const char *spcmd1[] = {"kitty", "-n", "spterm", "-g", "120x34", NULL };
+const char *spcmd1[] = {"kitty", "--class", "dropdown", "-e", "tmux new-session", NULL};
+const char *spcmd2[] = {"kitty", "--class", "files", "-e", "ranger", NULL};
+const char *spcmd3[] = {"kitty", "--class", "htop", "-e", "htop", NULL};
 static Sp scratchpads[] = {
    /* name          cmd  */
    {"spterm",      spcmd1},
+   // {"spranger",    spcmd2},
+   // {"sphtop",      spcmd3},
 };
 
-/*
- *  1) static char *tagicons[][NUMTAGS*2] = {
- *         [DEFAULT_TAGS] = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I" },
- *     }
- *
- *  2) static char *tagicons[][1] = {
- *         [DEFAULT_TAGS] = { "•" },
- *     }
- */
 static char *tagicons[][NUMTAGS] =
 {
 	// [DEFAULT_TAGS]        = { "󰅬", "", "", "", "", "", "", "󰨞", "" },
@@ -130,25 +125,6 @@ static char *tagicons[][NUMTAGS] =
 
 };
 
-
-/* There are two options when it comes to per-client rules:
- *  - a typical struct table or
- *  - using the RULE macro
- *
- * A traditional struct table looks like this:
- *    // class      instance  title  wintype  tags mask  isfloating  monitor
- *    { "Gimp",     NULL,     NULL,  NULL,    1 << 4,    0,          -1 },
- *    { "Firefox",  NULL,     NULL,  NULL,    1 << 7,    0,          -1 },
- *
- * The RULE macro has the default values set for each field allowing you to only
- * specify the values that are relevant for your rule, e.g.
- *
- *    RULE(.class = "Gimp", .tags = 1 << 4)
- *    RULE(.class = "Firefox", .tags = 1 << 7)
- *
- * Refer to the Rule struct definition for the list of available fields depending on
- * the patches you enable.
- */
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
@@ -160,9 +136,15 @@ static const Rule rules[] = {
 	RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
 	RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
 	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
-	RULE(.class = "Gimp", .tags = 1 << 4)
-	RULE(.class = "Firefox", .tags = 1 << 7)
+	RULE(.class = "qutebrowser", .tags = 2 >> 2 )
+	RULE(.class = "kitty", .isterminal = 1)
 	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
+	RULE(.title = "Discord Updater", .tags = 5, .isfloating = 1, .floatpos = "50% 50%")
+	RULE(.class = "discord",         .tags = 5)
+	RULE(.instance = "Telegram", .tags = 5, .isfloating = 1, .floatpos = "30% 70%")
+	RULE(.class = "Thunar", .tags = SPTAG(3))
+	RULE(.class = "obs", .tags = 8)
+	RULE(.class = "qBittorrent", .tags = 4)
 };
 
 
@@ -244,9 +226,13 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 
-	{ MODKEY,                       XK_grave,      togglescratch,          {.ui = 0 } },
-	{ MODKEY|ControlMask,           XK_grave,      setscratch,             {.ui = 0 } },
-	{ MODKEY|ShiftMask,             XK_grave,      removescratch,          {.ui = 0 } },
+	{ MODKEY,                       XK_r,      togglescratch,          {.ui = 0 } },
+	{ MODKEY|ControlMask,           XK_r,      setscratch,             {.ui = 0 } },
+	{ MODKEY|ShiftMask,             XK_r,      removescratch,          {.ui = 0 } },
+	// {MODKEY, XK_r, togglescratch, {.ui = 0}},
+ //  {MODKEY, XK_c, togglescratch, {.ui = 1}},
+ //  {MODKEY, XK_g, togglescratch, {.ui = 2}},
+
 	{ Mod1Mask,                     XK_0,      view,           {.ui = ~SPTAGMASK } },
 	{ Mod1Mask|ShiftMask,           XK_0,      tag,            {.ui = ~SPTAGMASK } },
 
