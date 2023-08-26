@@ -66,14 +66,13 @@ static char titleselbgcolor[]            = "#ffffff";
 static char titleselbordercolor[]        = "#6C7A89";
 static char titleselfloatcolor[]         = "#005577";
 
-// static char tagsnormfgcolor[]            = "#c8c8c8";
-static char tagsnormfgcolor[]            = "#6C7A89";
-static char tagsnormbgcolor[]            = "#ffffff";
+static char tagsnormfgcolor[]            = "#c8c8c8";
+static char tagsnormbgcolor[]            = "#393737";
 static char tagsnormbordercolor[]        = "#6C7A89";
 static char tagsnormfloatcolor[]         = "#005577";
 
-static char tagsselfgcolor[]             = "#393737";
-static char tagsselbgcolor[]             = "#ffffff";
+static char tagsselfgcolor[]             = "#ffffff";
+static char tagsselbgcolor[]             = "#393737";
 static char tagsselbordercolor[]         = "#6C7A89";
 static char tagsselfloatcolor[]          = "#005577";
 
