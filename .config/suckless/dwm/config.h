@@ -15,8 +15,8 @@ static const int topbar                  = 1;   /* 0 means bottom bar */
 static const int swallowfloating         = 0;   /* 1 means swallow floating windows by default */
 static const int riodraw_matchpid        = 1;  /* 0 or 1, indicates whether to match the PID of the client that was spawned with riospawn */
 
-static const int vertpad                 = 6;  /* vertical padding of bar */
-static const int sidepad                 = 6;  /* horizontal padding of bar */
+static const int vertpad                 = 4;  /* vertical padding of bar */
+static const int sidepad                 = 4;  /* horizontal padding of bar */
 #define ICONSIZE 24    /* icon size */
 #define ICONSPACING 5  /* space between icon and title */
 /* Status is to be shown on: -1 (all monitors), 0 (a specific monitor by index), 'A' (active monitor) */
@@ -30,14 +30,10 @@ static const int vertpadbar              = 0;   /* vertical padding for statusba
 static const int statusmon               = 'A';
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int showsystray             = 1;   /* 0 means no systray */
-static const unsigned int ulinepad = 2;         /* horizontal padding between the underline and tag */
-static const unsigned int ulinestroke  = 0;     /* thickness / height of the underline */
-static const unsigned int ulinevoffset = 0;     /* how far above the bottom of the bar the line should appear */
-static const int ulineall = 0;                  /* 1 to show underline on all tags, 0 for just the active ones */
 
-static const unsigned int gappih    = 8;       /* horiz inner gap between windows */
+static const unsigned int gappih    = 6;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 6;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 8;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappoh    = 4;       /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov    = 4;       /* vert outer gap between windows and screen edge */
 static const int smartgaps_fact          = 1;        /* 1 means no outer gap when there is only one window */
 
