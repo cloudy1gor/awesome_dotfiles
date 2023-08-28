@@ -3,6 +3,13 @@
 # Configure display settings if needed
 xrandr --output eDP --primary --mode 1920x1080 --rotate normal --output HDMI-A-0 --auto --rotate normal --right-of eDP &
 
+# Dbus
+if test -z "$DBUS_SESSION_BUS_ADDRESS" ; then
+    # if not found, launch a new one
+    eval `dbus-launch --sh-syntax --exit-with-session`
+    echo "D-Bus per-session daemon address is: $DBUS_SESSION_BUS_ADDRESS"
+fi
+
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
@@ -33,5 +40,13 @@ fi
 [ -f /etc/xprofile ] && . /etc/xprofile
 [ -f ~/.xprofile ] && . ~/.xprofile
 
-exec awesome
+# slstatus &
+# exec dwm
+
+while type dwm >/dev/null; do
+	(sleep 1 && slstatus) &
+	dwm && continue || break;
+done
+
+# exec awesome
 

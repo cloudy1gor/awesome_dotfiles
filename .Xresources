@@ -9,6 +9,9 @@ Xft.lcdfilter:   lcddefault
 ! Comand for search font:: fc-list | grep "JetBrains Mono"
 *.font: xft:JetBrainsMono Nerd Font:style=Medium,Regular:size=12
 
-Xcursor.theme: capitaine-cursors
+*iconTheme: Papirus
+*themeName: WhiteSur-Light-solid
+
+Xcursor.theme: Future-cursors
 Xcursor.size: 24
 

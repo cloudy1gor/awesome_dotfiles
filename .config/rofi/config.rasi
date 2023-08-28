@@ -12,4 +12,4 @@ configuration {
 	steal-focus:									  true;
 }
 
-@import "~/.config/rofi/cloud.rasi"
+@theme "~/.config/rofi/style-1.rasi"

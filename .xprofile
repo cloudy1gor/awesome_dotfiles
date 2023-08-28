@@ -1,6 +1,3 @@
-# Dbus session
-export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus
-
 # Set default screen brightness
 brightnessctl set 10% &
 
@@ -16,11 +13,14 @@ xbanish &
 # Auto-hide the mouse cursor when inactive
 unclutter -idle 2 &
 
+# To open app menu using Mod4Key
+ksuperkey -e 'Super_L=Alt_L|F1' & ksuperkey -e 'Super_R=Alt_L|F1' &
+
 # Fix cursor shape
 xsetroot -cursor_name left_ptr &
 
 # Wallpaper
-# feh --bg-scale --randomize --no-fehbg ~/Pictures/Wallpapers/*
+feh --bg-scale --randomize --no-fehbg ~/Pictures/Wallpapers/*
 
 # Keyboard
 # setxkbmap -option grp:win_space_toggle us,ru &

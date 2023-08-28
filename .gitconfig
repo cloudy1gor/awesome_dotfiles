@@ -1,13 +1,19 @@
+[github]
+	user = cloudy1gor
+
 [user]
 	name = cloudy1gor
 	email = savelyev7979@gmail.com
+
+[hub]
+  protocol = https
 
 [push]
 	default = current
 	
 [core]
 	excludesfile = ~/.gitignore
-	editor = code
+	editor = nvim
 
 [help]
   autocorrect = 1	
@@ -39,8 +45,3 @@
   changed = yellow reverse
   untracked = red reverse
   
-[hub]
-  protocol = https
-  
-[github]
-	user = cloudy1gor
