@@ -15,6 +15,7 @@ window {
     transparency:                   "real";
     border-radius:                  10px;
     width:                          120px;
+    height:                         380px;
     location:                       east;
     x-offset:                       -5px;
     y-offset:                       0px;

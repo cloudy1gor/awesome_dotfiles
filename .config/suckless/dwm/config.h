@@ -17,7 +17,7 @@ static const int riodraw_matchpid        = 1;  /* 0 or 1, indicates whether to m
 
 static const int vertpad                 = 4;  /* vertical padding of bar */
 static const int sidepad                 = 4;  /* horizontal padding of bar */
-#define ICONSIZE 24    /* icon size */
+#define ICONSIZE 22    /* icon size */
 #define ICONSPACING 5  /* space between icon and title */
 /* Status is to be shown on: -1 (all monitors), 0 (a specific monitor by index), 'A' (active monitor) */
 
@@ -121,8 +121,7 @@ static char *tagicons[][NUMTAGS] =
 	// [DEFAULT_TAGS]        = { "󰎥", "󰎨", "󰎫", "󰎲", "󰎯", "󰎴", "󰎷", "󰎺", "󰎽" },
 	// [ALTERNATIVE_TAGS]    = { "󰎥 ", "󰼐 ", "󰎫 ", "󰼒 ", "󰎯 ", "󰼔 ", "󰎷 ", "󰼖 ", "󰎽 " },
 	// [ALT_TAGS_DECORATION] = { "󰼏", "󰼐", "󰼑", "󰼒", "󰼓", "󰼔", "󰼕", "󰼖", "󰼗" },
-	[ALT_TAGS_DECORATION] = { "󰅬", "", "", "", "󰭹", "󰷈", "", "󰨞", "󰎄" },
-
+	[ALT_TAGS_DECORATION] = { "󰅬", "", "", "", "󰭻", "󰷈", "", "󰨞", "󰎄" },
 };
 
 static const Rule rules[] = {
@@ -136,15 +135,15 @@ static const Rule rules[] = {
 	RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
 	RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
 	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
-	RULE(.class = "qutebrowser", .tags = 2 >> 2 )
+	RULE(.class = "qutebrowser", .tags = 1 << 1 )
 	RULE(.class = "kitty", .isterminal = 1)
 	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
-	RULE(.title = "Discord Updater", .tags = 5, .isfloating = 1, .floatpos = "50% 50%")
-	RULE(.class = "discord",         .tags = 5)
-	RULE(.instance = "Telegram", .tags = 5, .isfloating = 1, .floatpos = "30% 70%")
-	RULE(.class = "Thunar", .tags = SPTAG(3))
-	RULE(.class = "obs", .tags = 8)
-	RULE(.class = "qBittorrent", .tags = 4)
+	RULE(.title = "Discord Updater", .tags = 1 << 4, .isfloating = 1, .floatpos = "50% 50%")
+	RULE(.class = "discord",         .tags = 1 << 4)
+	RULE(.class = "TelegramDesktop", .tags = 1 << 4, .isfloating = 1, .floatpos = "30% 70%")
+	RULE(.class = "Thunar", .tags = 1 << 2
+	RULE(.class = "obs", .tags = 1 << 7)
+	RULE(.class = "qBittorrent", .tags = 1 << 3)
 };
 
 
@@ -282,6 +281,7 @@ static const Key keys[] = {
 	{ 0,                       			XK_Print, 		 spawn,      SHCMD("flameshot gui") },
 	{ MODKEY,                       XK_w, 		 		 spawn,      SHCMD("qutebrowser") },
 	{ MODKEY,                       XK_n, 		 		 spawn,      SHCMD("kitty nvim") },
+	{ MODKEY|ShiftMask, 						XK_e, 				 spawn, 		 SHCMD("~/.config/rofi/powermenu.sh") },
 
 	/* Wallpapers chager */
 	{ MODKEY|ShiftMask,             XK_w, 		 		 spawn,      SHCMD("feh --bg-scale --randomize --no-fehbg ~/Pictures/Wallpapers/*") },
