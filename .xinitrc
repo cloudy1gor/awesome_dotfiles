@@ -40,9 +40,6 @@ fi
 [ -f /etc/xprofile ] && . /etc/xprofile
 [ -f ~/.xprofile ] && . ~/.xprofile
 
-# slstatus &
-# exec dwm
-
 while type dwm >/dev/null; do
 	(sleep 1 && slstatus) &
 	dwm && continue || break;

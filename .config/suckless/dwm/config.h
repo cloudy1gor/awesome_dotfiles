@@ -1,53 +1,47 @@
 /* See LICENSE file for copyright and license details. */
 
-/* appearance */
+static const unsigned int barborderpx    = 5; /* border pixel of bar */
+static const unsigned int borderpx       = 5; /* border pixel of windows */
 
-/* [patch]: bar border */
-static const unsigned int barborderpx    = 5;  /* border pixel of bar */
+static const unsigned int snap           = 32; /* snap pixel */
+static const int showbar                 = 1;  /* 0 means no bar */
+static const int topbar                  = 1;  /* 0 means bottom bar */
 
-static const unsigned int borderpx       = 5;   /* border pixel of windows */
+static const int swallowfloating         = 0; /* 1 means swallow floating windows by default */
+static const int riodraw_matchpid        = 1; /* 0 or 1, indicates whether to match the PID of the client that was spawned with riospawn */
 
-static const unsigned int snap           = 32;  /* snap pixel */
-static const int showbar                 = 1;   /* 0 means no bar */
-static const int topbar                  = 1;   /* 0 means bottom bar */
-
-/* [patch]: swallow */
-static const int swallowfloating         = 0;   /* 1 means swallow floating windows by default */
-static const int riodraw_matchpid        = 1;  /* 0 or 1, indicates whether to match the PID of the client that was spawned with riospawn */
-
-static const int vertpad                 = 4;  /* vertical padding of bar */
-static const int sidepad                 = 4;  /* horizontal padding of bar */
+static const int vertpad                 = 4; /* vertical padding of bar */
+static const int sidepad                 = 4; /* horizontal padding of bar */
 #define ICONSIZE 22    /* icon size */
 #define ICONSPACING 5  /* space between icon and title */
 /* Status is to be shown on: -1 (all monitors), 0 (a specific monitor by index), 'A' (active monitor) */
 
-/* [patch]: floating position */
-static int floatposgrid_x                = 5;  /* float grid columns */
-static int floatposgrid_y                = 5;  /* float grid rows */
+static int floatposgrid_x                = 5; /* float grid columns */
+static int floatposgrid_y                = 5; /* float grid rows */
 
-static const int horizpadbar             = 0;   /* horizontal padding for statusbar */
-static const int vertpadbar              = 0;   /* vertical padding for statusbar */
+static const int horizpadbar             = 0; /* horizontal padding for statusbar */
+static const int vertpadbar              = 0; /* vertical padding for statusbar */
 static const int statusmon               = 'A';
 
-static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
-static const unsigned int systrayonleft = 0;    /* 0: systray in the right corner, >0: systray on left of status text */
-static const unsigned int systrayspacing = 2;   /* systray spacing */
-static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
-static const int showsystray        = 1;        /* 0 means no systray */
-static const int systraypadding = 0; /* padding to use between end of bar text and the systray */
+static const unsigned int systraypinning = 0; /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
+static const unsigned int systrayonleft  = 0; /* 0: systray in the right corner, >0: systray on left of status text */
+static const unsigned int systrayspacing = 2; /* systray spacing */
+static const int systraypinningfailfirst = 1; /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
+static const int showsystray             = 1; /* 0 means no systray */
+static const int systraypadding          = 0; /* padding to use between end of bar text and the systray */
 
-static const unsigned int gappih    = 6;       /* horiz inner gap between windows */
-static const unsigned int gappiv    = 6;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 4;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 4;       /* vert outer gap between windows and screen edge */
-static const int smartgaps_fact          = 1;        /* 1 means no outer gap when there is only one window */
+static const unsigned int gappih         = 6; /* horiz inner gap between windows */
+static const unsigned int gappiv         = 6; /* vert inner gap between windows */
+static const unsigned int gappoh         = 4; /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov         = 4; /* vert outer gap between windows and screen edge */
+static const int smartgaps_fact          = 1; /* 1 means no outer gap when there is only one window */
 
 /* Indicators: see patch/bar_indicators.h for options */
 static int tagindicatortype              = INDICATOR_TOP_LEFT_SQUARE;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_SQUARE;
-static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=12:antialias=true:autohint=true" };
-static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=12:antialias=true:autohint=true";
+static const char *fonts[]               = { "JetBrainsMono Nerd Font:size=12:antialias=true:autohint=true" };
+static const char dmenufont[]            = "JetBrainsMono Nerd Font:size=12:antialias=true:autohint=true";
 
 static char c000000[]                    = "#000000"; // placeholder value
 
@@ -135,13 +129,16 @@ static const Rule rules[] = {
 	RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
 	RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
 	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
+	RULE(.class = "Safeeyes", .tags = 1 << 3, .isfloating = 1, .floatpos = "30 70")
 	RULE(.class = "qutebrowser", .tags = 1 << 1 )
+	RULE(.class = "Vivaldi-stable", .tags = 1 << 3)
+	RULE(.class = "KeePassXC", .tags = 1 << 3, .isfloating = 1)
 	RULE(.class = "kitty", .isterminal = 1)
 	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
-	RULE(.title = "Discord Updater", .tags = 1 << 4, .isfloating = 1, .floatpos = "50% 50%")
+	RULE(.title = "Discord Updater", .tags = 1 << 4, .isfloating = 1)
 	RULE(.class = "discord",         .tags = 1 << 4)
-	RULE(.class = "TelegramDesktop", .tags = 1 << 4, .isfloating = 1, .floatpos = "30% 70%")
-	RULE(.class = "Thunar", .tags = 1 << 2
+	RULE(.class = "TelegramDesktop", .tags = 1 << 4, .isfloating = 1)
+	RULE(.class = "Thunar", .tags = 1 << 2)
 	RULE(.class = "obs", .tags = 1 << 7)
 	RULE(.class = "qBittorrent", .tags = 1 << 3)
 };
@@ -170,10 +167,10 @@ static const BarRule barrules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
-static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
-static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
+static const float mfact            = 0.55; /* factor of master area size [0.05..0.95] */
+static const int nmaster            = 1;    /* number of clients in master area */
+static const int resizehints        = 0;    /* 1 means respect size hints in tiled resizals */
+static const int lockfullscreen     = 1;    /* 1 will force focus on the fullscreen window */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -189,8 +186,6 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
-
-
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -214,8 +209,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY|ShiftMask,             XK_j,          movestack,              {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_k,          movestack,              {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_j,      movestack,              {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_k,      movestack,              {.i = -1 } },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,					              XK_q,      killclient,     {0} },
@@ -224,6 +219,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+	{ MODKEY|ShiftMask,             XK_s,      togglesticky,   {0} },
 
 	{ MODKEY,                       XK_r,      togglescratch,          {.ui = 0 } },
 	{ MODKEY|ControlMask,           XK_r,      setscratch,             {.ui = 0 } },
@@ -279,6 +275,7 @@ static const Key keys[] = {
 
 	/* Apps */
 	{ 0,                       			XK_Print, 		 spawn,      SHCMD("flameshot gui") },
+	{ MODKEY,                       XK_BackSpace,  spawn,      SHCMD("Thunar") },
 	{ MODKEY,                       XK_w, 		 		 spawn,      SHCMD("qutebrowser") },
 	{ MODKEY,                       XK_n, 		 		 spawn,      SHCMD("kitty nvim") },
 	{ MODKEY|ShiftMask, 						XK_e, 				 spawn, 		 SHCMD("~/.config/rofi/powermenu.sh") },
@@ -287,7 +284,6 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_w, 		 		 spawn,      SHCMD("feh --bg-scale --randomize --no-fehbg ~/Pictures/Wallpapers/*") },
 };
 
-/* [patch]: Cool Autostart apps */
 static const char *const autostart[] = {
     "sh", "-c", "~/.local/bin/autostart.sh", NULL,
     "sh", "-c", "~/.local/bin/battery_monitor.sh", NULL,

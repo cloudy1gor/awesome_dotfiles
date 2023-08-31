@@ -18,6 +18,7 @@
 #include "movestack.c"
 #include "pertag.c"
 #include "scratchpad.c"
+#include "sticky.c"
 #include "swallow.c"
 #include "vanitygaps.c"
 #include "warp.c"

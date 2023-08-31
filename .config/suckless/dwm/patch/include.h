@@ -18,6 +18,7 @@
 #include "movestack.h"
 #include "pertag.h"
 #include "scratchpad.h"
+#include "sticky.h"
 #include "swallow.h"
 #include "vanitygaps.h"
 #include "warp.h"
