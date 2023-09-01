@@ -201,6 +201,7 @@ struct Client {
 	int basew, baseh, incw, inch, maxw, maxh, minw, minh, hintsvalid;
 	int bw, oldbw;
 	unsigned int tags;
+	unsigned int switchtag;
 	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
 	int isterminal, noswallow;
 	pid_t pid;
@@ -259,6 +260,7 @@ typedef struct {
 	const char *title;
 	const char *wintype;
 	unsigned int tags;
+	int switchtag;
 	int isfloating;
 	int isterminal;
 	int noswallow;
@@ -275,7 +277,7 @@ typedef struct {
 #define FAKEFULLSCREEN
 #define NOSWALLOW , .noswallow = 1
 #define TERMINAL , .isterminal = 1
-#define SWITCHTAG
+#define SWITCHTAG , .switchtag = 1
 
 
 /* function declarations */
@@ -322,7 +324,6 @@ static void maprequest(XEvent *e);
 static void motionnotify(XEvent *e);
 static void movemouse(const Arg *arg);
 static Client *nexttiled(Client *c);
-static void pop(Client *c);
 static void propertynotify(XEvent *e);
 static void quit(const Arg *arg);
 static Monitor *recttomon(int x, int y, int w, int h);
@@ -433,6 +434,7 @@ applyrules(Client *c)
 	const char *class, *instance;
 	Atom wintype;
 	unsigned int i;
+	unsigned int newtagset;
 	const Rule *r;
 	Monitor *m;
 	XClassHint ch = { NULL, NULL };
@@ -469,6 +471,29 @@ applyrules(Client *c)
 				setfloatpos(c, r->floatpos);
 			}
 
+			if (r->switchtag && (
+				c->noswallow > 0 ||
+				!termforwin(c) ||
+				!(c->isfloating && swallowfloating && c->noswallow < 0)))
+			{
+				selmon = c->mon;
+				if (r->switchtag == 2 || r->switchtag == 4)
+					newtagset = c->mon->tagset[c->mon->seltags] ^ c->tags;
+				else
+					newtagset = c->tags;
+
+				/* Switch to the client's tag, but only if that tag is not already shown */
+				if (newtagset && !(c->tags & c->mon->tagset[c->mon->seltags])) {
+					if (r->switchtag == 3 || r->switchtag == 4)
+						c->switchtag = c->mon->tagset[c->mon->seltags];
+					if (r->switchtag == 1 || r->switchtag == 3) {
+						view(&((Arg) { .ui = newtagset }));
+					} else {
+						c->mon->tagset[c->mon->seltags] = newtagset;
+						arrange(c->mon);
+					}
+				}
+			}
 		}
 	}
 	if (ch.res_class)
@@ -951,6 +976,7 @@ createmon(void)
 		m->pertag->mfacts[i] = m->mfact;
 
 
+		m->pertag->prevzooms[i] = NULL;
 
 		/* init layouts */
 		m->pertag->ltidxs[i][0] = m->lt[0];
@@ -1671,14 +1697,6 @@ nexttiled(Client *c)
 	return c;
 }
 
-void
-pop(Client *c)
-{
-	detach(c);
-	attach(c);
-	focus(c);
-	arrange(c->mon);
-}
 
 void
 propertynotify(XEvent *e)
@@ -1943,6 +1961,8 @@ sendmon(Client *c, Monitor *m)
 	attachstack(c);
 	arrange(NULL);
 	focus(NULL);
+	if (c->switchtag)
+		c->switchtag = 0;
 }
 
 void
@@ -2234,6 +2254,8 @@ tag(const Arg *arg)
 
 	if (selmon->sel && arg->ui & TAGMASK) {
 		selmon->sel->tags = arg->ui & TAGMASK;
+		if (selmon->sel->switchtag)
+			selmon->sel->switchtag = 0;
 		arrange(selmon);
 		focus(NULL);
 	}
@@ -2359,8 +2381,18 @@ void
 unmanage(Client *c, int destroyed)
 {
 	Monitor *m;
+	unsigned int switchtag = c->switchtag;
 	XWindowChanges wc;
 
+	/* Make sure to clear any previous zoom references to the client being removed. */
+	int i;
+	for (m = mons; m; m = m->next) {
+		for (i = 0; i <= NUMTAGS; i++) {
+			if (m->pertag->prevzooms[i] == c) {
+				m->pertag->prevzooms[i] = NULL;
+			}
+		}
+	}
 	m = c->mon;
 
 	if (c->swallowing) {
@@ -2400,6 +2432,8 @@ unmanage(Client *c, int destroyed)
 	arrange(m);
 	focus(NULL);
 	updateclientlist();
+	if (switchtag && ((switchtag & TAGMASK) != selmon->tagset[selmon->seltags]))
+		view(&((Arg) { .ui = switchtag }));
 }
 
 void
@@ -2775,15 +2809,42 @@ zoom(const Arg *arg)
 		c = (Client*)arg->v;
 	if (!c)
 		return;
+	Client *at = NULL, *cold, *cprevious = NULL, *p;
 
 
 
 	if (!c->mon->lt[c->mon->sellt]->arrange || !c || c->isfloating)
 		return;
 
-	if (c == nexttiled(selmon->clients) && !(c = nexttiled(c->next)))
-		return;
-	pop(c);
+	if (c == nexttiled(c->mon->clients)) {
+		p = c->mon->pertag->prevzooms[c->mon->pertag->curtag];
+		at = findbefore(p);
+		if (at)
+			cprevious = nexttiled(at->next);
+		if (!cprevious || cprevious != p) {
+			c->mon->pertag->prevzooms[c->mon->pertag->curtag] = NULL;
+			if (!c || !(c = nexttiled(c->next)))
+				return;
+		} else
+			c = cprevious;
+	}
+
+	cold = nexttiled(c->mon->clients);
+	if (c != cold && !at)
+		at = findbefore(c);
+	detach(c);
+	attach(c);
+	/* swap windows instead of pushing the previous one down */
+	if (c != cold && at) {
+		c->mon->pertag->prevzooms[c->mon->pertag->curtag] = cold;
+		if (cold && at != cold) {
+			detach(cold);
+			cold->next = at->next;
+			at->next = cold;
+		}
+	}
+	focus(c);
+	arrange(c->mon);
 }
 
 int

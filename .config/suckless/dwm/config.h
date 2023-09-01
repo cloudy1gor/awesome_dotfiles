@@ -77,11 +77,11 @@ static char tagsselfloatcolor[]          = "#005577";
 
 static char hidnormfgcolor[]             = "#005577";
 static char hidselfgcolor[]              = "#227799";
-static char hidnormbgcolor[]             = "#ffffff";
-static char hidselbgcolor[]              = "#222222";
+static char hidnormbgcolor[]             = "#393737";
+static char hidselbgcolor[]              = "#393737";
 
 static char urgfgcolor[]                 = "#ff0000";
-static char urgbgcolor[]                 = "#ffffff";
+static char urgbgcolor[]                 = "#393737";
 static char urgbordercolor[]             = "#ff0000";
 static char urgfloatcolor[]              = "#ff0000";
 
@@ -98,14 +98,14 @@ static char *colors[][ColCount] = {
 	[SchemeUrg]          = { urgfgcolor,       urgbgcolor,       urgbordercolor,       urgfloatcolor },
 };
 
-const char *spcmd1[] = {"kitty", "--class", "dropdown", "-e", "tmux new-session", NULL};
+const char *spcmd1[] = {"kitty", "--class", "dropdown", "-e", "tmux", NULL};
 const char *spcmd2[] = {"kitty", "--class", "files", "-e", "ranger", NULL};
-const char *spcmd3[] = {"kitty", "--class", "htop", "-e", "htop", NULL};
+const char *spcmd3[] = {"kitty", "--class", "monitor", "-e", "btop", NULL};
 static Sp scratchpads[] = {
-   /* name          cmd  */
-   {"spterm",      spcmd1},
-   // {"spranger",    spcmd2},
-   // {"sphtop",      spcmd3},
+   /* name           cmd  */
+   {"dropdown",      spcmd1},
+   {"files",         spcmd2},
+   {"monitor",       spcmd3},
 };
 
 static char *tagicons[][NUMTAGS] =
@@ -125,24 +125,33 @@ static const Rule rules[] = {
 	 *	WM_WINDOW_ROLE(STRING) = role
 	 *	_NET_WM_WINDOW_TYPE(ATOM) = wintype
 	 */
-	RULE(.wintype = WTYPE "DIALOG", .isfloating = 1)
-	RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
-	RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
-	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
-	RULE(.class = "Safeeyes", .tags = 1 << 3, .isfloating = 1, .floatpos = "30 70")
-	RULE(.class = "qutebrowser", .tags = 1 << 1 )
-	RULE(.class = "Vivaldi-stable", .tags = 1 << 3)
-	RULE(.class = "KeePassXC", .tags = 1 << 3, .isfloating = 1)
-	RULE(.class = "kitty", .isterminal = 1)
-	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
-	RULE(.title = "Discord Updater", .tags = 1 << 4, .isfloating = 1)
-	RULE(.class = "discord",         .tags = 1 << 4)
-	RULE(.class = "TelegramDesktop", .tags = 1 << 4, .isfloating = 1)
-	RULE(.class = "Thunar", .tags = 1 << 2)
-	RULE(.class = "obs", .tags = 1 << 7)
-	RULE(.class = "qBittorrent", .tags = 1 << 3)
-};
+	RULE(.wintype = WTYPE "DIALOG", 		.isfloating = 1)
+	RULE(.wintype = WTYPE "UTILITY", 		.isfloating = 1)
+	RULE(.wintype = WTYPE "TOOLBAR", 		.isfloating = 1)
+	RULE(.wintype = WTYPE "SPLASH", 		.isfloating = 1)
 
+	RULE(.class = "Pavucontrol", 				.tags = 1 << 0, .switchtag = 1, .isfloating = 1, .floatpos = "40% 40% 70% 80%")
+	RULE(.class = "Safeeyes", 					.tags = 1 << 3, .isfloating = 1, .floatpos = "30 70")
+	RULE(.class = "qutebrowser", 				.tags = 1 << 1, .switchtag = 1 )
+	RULE(.class = "Vivaldi-stable", 		.tags = 1 << 3, .switchtag = 1)
+	RULE(.class = "KeePassXC", 					.tags = 1 << 3, .switchtag = 1, .isfloating = 1, .floatpos = "40% 40% 70% 80%")
+	RULE(.class = "kitty", 							.isterminal = 1)
+	RULE(.instance = "spterm", 					.tags = SPTAG(0), .isfloating = 1)
+	RULE(.title = "Discord Updater", 		.tags = 1 << 4, .isfloating = 1, .floatpos = "50% 50%")
+	RULE(.class = "discord",         		.tags = 1 << 4)
+	RULE(.class = "TelegramDesktop", 		.tags = 1 << 4, .isfloating = 1)
+	RULE(.class = "zoom", 							.tags = 1 << 4, .switchtag = 1, .isfloating = 1)
+	RULE(.class = "obsidian",        		.tags = 1 << 5, .switchtag = 1)
+	RULE(.class = "Thunar", 						.tags = 1 << 2, .switchtag = 1)
+	// RULE(.class = "obs", 								.tags = 1 << 7)
+	RULE(.class = "qBittorrent", 				.tags = 1 << 3, .switchtag = 1)
+
+	/* Scratchpads rules */ 
+	RULE(.class = "dropdown", 					.isfloating = 1, .floatpos = "30% 30% 50% 60%")
+	RULE(.class = "files", 							.isfloating = 1, .floatpos = "40% 40% 70% 80%")
+	RULE(.class = "monitor", 						.isfloating = 1, .floatpos = "50% 50% 60% 70%")
+
+};
 
 
 /* Bar rules allow you to configure what is shown where on the bar, as well as
@@ -221,12 +230,12 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY|ShiftMask,             XK_s,      togglesticky,   {0} },
 
-	{ MODKEY,                       XK_r,      togglescratch,          {.ui = 0 } },
-	{ MODKEY|ControlMask,           XK_r,      setscratch,             {.ui = 0 } },
-	{ MODKEY|ShiftMask,             XK_r,      removescratch,          {.ui = 0 } },
-	// {MODKEY, XK_r, togglescratch, {.ui = 0}},
- //  {MODKEY, XK_c, togglescratch, {.ui = 1}},
- //  {MODKEY, XK_g, togglescratch, {.ui = 2}},
+	// { MODKEY,                       XK_t,      togglescratch,          {.ui = 0 } },
+	// { MODKEY|ControlMask,           XK_t,      setscratch,             {.ui = 0 } },
+	// { MODKEY|ShiftMask,             XK_t,      removescratch,          {.ui = 0 } },
+	{MODKEY|ShiftMask,              XK_Return,     togglescratch,  {.ui = 0}},
+  {MODKEY|ShiftMask,              XK_BackSpace,  togglescratch,  {.ui = 1}},
+  {Mod1Mask,                      XK_m,      		 togglescratch,  {.ui = 2}},
 
 	{ Mod1Mask,                     XK_0,      view,           {.ui = ~SPTAGMASK } },
 	{ Mod1Mask|ShiftMask,           XK_0,      tag,            {.ui = ~SPTAGMASK } },

@@ -22,6 +22,7 @@
 #include "swallow.h"
 #include "vanitygaps.h"
 #include "warp.h"
+#include "zoomswap.h"
 /* Layouts */
 #include "layout_monocle.h"
 #include "layout_tile.h"
