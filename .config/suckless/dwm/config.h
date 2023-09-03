@@ -145,6 +145,7 @@ static const Rule rules[] = {
 	RULE(.class = "Thunar", 						.tags = 1 << 2, .switchtag = 1)
 	// RULE(.class = "obs", 								.tags = 1 << 7)
 	RULE(.class = "qBittorrent", 				.tags = 1 << 3, .switchtag = 1)
+	RULE(.class = "Virt-manager", 			.tags = 1 << 7, .switchtag = 1)
 
 	/* Scratchpads rules */ 
 	RULE(.class = "dropdown", 					.isfloating = 1, .floatpos = "30% 30% 50% 60%")

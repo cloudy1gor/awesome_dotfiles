@@ -67,7 +67,7 @@ static const struct arg args[] = {
 	/*    */
 	{ run_command, "^b#ffffff^^c#6c7a89^%s", "echo " },
 	{ run_command, "^b#c1c7ce^^c#6c7a89^%s", "echo " },
-	{ netspeed_rx,"^b#c1c7ce^^c#379237^ %s ", "wlp1s0"},
+	// { netspeed_rx,"^b#c1c7ce^^c#379237^ %s ", "wlp1s0"},
 	{ run_command, "^b#c1c7ce^^c#79018C^%s", "sh ~/.local/bin/caps.sh" },
 	{ run_command,"^b#c1c7ce^^c#79018C^%s ", "xkb-switch -p"},
 	{ run_command, "^b#c1c7ce^^c#125D98^󰕾 %s ", "amixer get Master | awk -F '[][]' 'END{print $2}' | sed 's/%//'" },
@@ -80,6 +80,7 @@ static const struct arg args[] = {
   { battery_perc, "^b#98a2ae^^c#000000^ %s", "BAT1" },
 	{ run_command, "^b#98a2ae^^c#6c7a89^%s", "echo " },
 	{ run_command, "^b#393737^^c#6c7a89^%s", "echo " },
+	{ run_command, "^b#393737^^c#ffffff^%s ", "sh ~/.local/bin/weather.sh" },
 	{ datetime, "^b#393737^^c#ffffff^%s", " %u|%d|%b  %H:%M" },
 	{ run_command, "^b#393737^^c#6c7a89^%s", "echo " },
 	{ run_command, "^b#ffffff^^c#6c7a89^%s", "echo " },

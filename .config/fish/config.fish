@@ -20,6 +20,16 @@ if status is-login
     end
 end
 
+# For the pipewire dbus session
+if not set -q XDG_CONFIG_HOME
+    set -x XDG_CONFIG_HOME $HOME/.config
+end
+
+# For the pipewire dbus session if used autostart & autologin
+if not set -q XDG_RUNTIME_DIR
+    set -x XDG_RUNTIME_DIR /run/user/$USER_ID
+end
+
 set fish_greeting ""
 
 # theme
