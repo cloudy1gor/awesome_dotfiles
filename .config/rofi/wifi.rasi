@@ -1,0 +1,103 @@
+configuration {
+    disable-history:                false;
+    click-to-exit:                  true;
+    kb-cancel:                      "Escape,Control+c";
+    cycle:                          true;
+}
+
+* {
+    background:			#181f21;
+    background-alt:		#2a3032;
+    brdr:               #131a1c;
+    foreground:			#D8D8D8;
+    foresel:            #67AFC1;
+    selected:			#2a3032;
+    urgent:				#E06C75;
+    on:					#87A181;
+    off:				#D88B9F;
+    font:               "JetBrains Mono 14";
+}
+
+* {
+    background-color:       @background;
+    text-color:             @foreground;
+    foreground-color:       @background-alt;
+}
+
+window {
+    width:      			330px;
+    height:                 400px;
+    padding:    			25px;
+    border:					0px;
+    border-radius:          18px;
+    border-color:           @selected;
+    anchor:                 East;
+    location:               East;
+    x-offset:               -10px;
+    y-offset:                40px;
+}
+
+entry {
+    expand: 				true;
+    width: 					150px;
+    text-color:				@foreground;
+}
+
+element-text, element-icon {
+    background-color:              inherit;
+    text-color:                    inherit;
+}
+
+element {
+    border: 						0px;
+    padding: 						8px;
+}
+
+element normal.normal {
+    background-color: 				@background;
+    text-color:       				@foreground;
+}
+
+element normal.urgent {
+    background-color: 				@background;
+    text-color:       				@off;
+}
+
+element normal.active {
+    background-color: 				@background;
+    text-color:       				@on;
+}
+
+element selected.normal {
+    background-color: 				@selected;
+    text-color:       				@foreground;
+    border: 						0px;
+    border-radius: 					8px;
+    border-color: 					@selected;
+}
+
+element selected.urgent {
+    background-color: 				@background;
+    text-color:       				@off;
+}
+
+element selected.active {
+    border-radius: 					8px;
+    background-color: 				@background-alt;
+    text-color:       				@on;
+}
+
+element alternate.normal {
+    background-color: 				@background;
+    text-color:       				@foreground;
+}
+
+element alternate.urgent {
+    background-color: 				@background;
+    text-color:       				@foreground;
+}
+
+element alternate.active {
+    background-color: 				@background;
+    text-color:       				@foreground;
+}
