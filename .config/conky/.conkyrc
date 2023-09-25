@@ -1,0 +1,58 @@
+conky.config = {
+
+-- Size and Position settings --
+  alignment = 'top_right',
+  gap_x = 10,
+  gap_y = 44,
+--  maximum_height = 300,
+--  minimum_height = 300,
+--  minimum_width = 600,
+  
+-- Text settings --
+  use_xft = true,
+  override_utf8_locale = true,
+  font = 'JetBrainsMono Nerd Font:bold:size=12',
+  
+-- Color Settings --
+  default_color = '#f9f9f9',
+  default_outline_color = 'white',
+  default_shade_color = 'white',
+  color1 = 'ffff00',
+
+  
+-- Window Settings --
+  background = false,
+  border_width = 1,
+  draw_borders = false,
+  draw_graph_borders = true,
+  draw_outline = false,
+  draw_shades = false,
+  own_window = true,
+  own_window_colour = '000000',
+	own_window_type = 'override',
+  own_window_class = 'Conky',
+  own_window_transparent = true,
+  own_window_argb_visual = false,
+  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+  stippled_borders = 0,
+
+-- Others --
+  cpu_avg_samples = 2,
+  net_avg_samples = 1,
+  double_buffer = true,
+  out_to_console = false,
+  out_to_stderr = false,
+  extra_newline = false,
+  update_interval = 1,
+  uppercase = false,
+  use_spacer = 'none',
+  show_graph_scale = false,
+  show_graph_range = false,
+}
+
+conky.text = [[
+${alignr}${offset 0}${voffset 0}${font JetBrainsMono Nerd Font:size=12}${font JetBrainsMono Nerd Font:bold:size=12} ${execi 5 ~/.config/conky/scripts/ssid}
+${alignr}${offset 0}${voffset 10}${font JetBrainsMono Nerd Font:size=12}󰇚 ${downspeed wlp1s0}${offset 5}${voffset -10}${downspeedgraph wlp1s0 24,110 ffffff 000000}
+${alignr}${offset 0}${voffset 0}${font JetBrainsMono Nerd Font:size=12}󰕒 ${upspeed wlp1s0}${offset 5}${voffset -10}${upspeedgraph wlp1s0 24,110 ffffff 000000}
+${offset 0}${voffset -20}${font JetBrainsMono Nerd Font:size=12}${execpi 3600 lua ~/.config/conky/scripts/cal.lua --hide-month --hide-year --today-bold --today-color=ffff00 --color=ffffff}
+]]
