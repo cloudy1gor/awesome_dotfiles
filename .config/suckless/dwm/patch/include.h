@@ -12,7 +12,6 @@
 #include "bar_systray.h"
 
 /* Other patches */
-#include "attachx.h"
 #include "cool_autostart.h"
 #include "floatpos.h"
 #include "movestack.h"
@@ -23,6 +22,7 @@
 #include "vanitygaps.h"
 #include "warp.h"
 #include "zoomswap.h"
+#include "xrdb.h"
 /* Layouts */
 #include "layout_monocle.h"
 #include "layout_tile.h"

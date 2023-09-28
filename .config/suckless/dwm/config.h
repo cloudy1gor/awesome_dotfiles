@@ -19,9 +19,10 @@ static const int sidepad                 = 4; /* horizontal padding of bar */
 static int floatposgrid_x                = 5; /* float grid columns */
 static int floatposgrid_y                = 5; /* float grid rows */
 
-static const int horizpadbar             = 0; /* horizontal padding for statusbar */
-static const int vertpadbar              = 0; /* vertical padding for statusbar */
-static const int statusmon               = 'A';
+static const int statusmon               = 0;
+
+static const int horizpadbar             = 0;   /* horizontal padding for statusbar */
+static const int vertpadbar              = 0;   /* vertical padding for statusbar */
 
 static const unsigned int systraypinning = 0; /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft  = 0; /* 0: systray in the right corner, >0: systray on left of status text */
@@ -98,7 +99,7 @@ static char *colors[][ColCount] = {
 	[SchemeUrg]          = { urgfgcolor,       urgbgcolor,       urgbordercolor,       urgfloatcolor },
 };
 
-const char *spcmd1[] = {"kitty", "--class", "dropdown", "-e", "tmux", NULL};
+const char *spcmd1[] = {"kitty", "--class", "dropdown", NULL};
 const char *spcmd2[] = {"kitty", "--class", "files", "-e", "ranger", NULL};
 const char *spcmd3[] = {"kitty", "--class", "monitor", "-e", "btop", NULL};
 static Sp scratchpads[] = {
@@ -112,6 +113,7 @@ static char *tagicons[][NUMTAGS] =
 {
 	// [DEFAULT_TAGS]        = { "󰅬", "", "", "", "", "", "", "󰨞", "" },
 	[DEFAULT_TAGS]        = { "", "󰊯", "", "", "󱋊", "󱇨", "󰘦", "󱀫", "󰎅" },
+	// [DEFAULT_TAGS]        = { ">_", "www", "~/", "{-}", ":::", "-_-", "Vi", "||", "mp3" },
 	// [DEFAULT_TAGS]        = { "󰎥", "󰎨", "󰎫", "󰎲", "󰎯", "󰎴", "󰎷", "󰎺", "󰎽" },
 	// [ALTERNATIVE_TAGS]    = { "󰎥 ", "󰼐 ", "󰎫 ", "󰼒 ", "󰎯 ", "󰼔 ", "󰎷 ", "󰼖 ", "󰎽 " },
 	// [ALT_TAGS_DECORATION] = { "󰼏", "󰼐", "󰼑", "󰼒", "󰼓", "󰼔", "󰼕", "󰼖", "󰼗" },
@@ -133,7 +135,8 @@ static const Rule rules[] = {
 	RULE(.class = "Pavucontrol", 				.tags = 1 << 0, .switchtag = 1, .isfloating = 1, .floatpos = "40% 40% 70% 80%")
 	RULE(.class = "Safeeyes", 					.tags = 1 << 3, .isfloating = 1, .floatpos = "30 70")
 	RULE(.class = "qutebrowser", 				.tags = 1 << 1, .switchtag = 1 )
-	RULE(.class = "Vivaldi-stable", 		.tags = 1 << 3, .switchtag = 1)
+	RULE(.class = "Vivaldi-stable", 		.tags = 1 << 1, .switchtag = 1)
+	RULE(.class = "Brave-browser", 			.tags = 1 << 1, .switchtag = 1 )
 	RULE(.class = "KeePassXC", 					.tags = 1 << 3, .switchtag = 1, .isfloating = 1, .floatpos = "40% 40% 70% 80%")
 	RULE(.class = "kitty", 							.isterminal = 1)
 	RULE(.instance = "spterm", 					.tags = SPTAG(0), .isfloating = 1)
@@ -171,8 +174,8 @@ static const BarRule barrules[] = {
 	/* monitor   bar    alignment         widthfunc                 drawfunc                clickfunc                hoverfunc                name */
 	{ -1,        0,     BAR_ALIGN_LEFT,   width_tags,               draw_tags,              click_tags,              hover_tags,              "tags" },
 	{  0,        0,     BAR_ALIGN_RIGHT,  width_systray,            draw_systray,           click_systray,           NULL,                    "systray" },
+	{ statusmon, 0,     BAR_ALIGN_RIGHT,   width_status2d,           draw_status2d,          click_status2d,          NULL,                    "status2d" },
 	{ -1,        0,     BAR_ALIGN_LEFT,   width_ltsymbol,           draw_ltsymbol,          click_ltsymbol,          NULL,                    "layout" },
-	{ statusmon, 0,     BAR_ALIGN_RIGHT,  width_status2d,           draw_status2d,          click_status2d,          NULL,                    "status2d" },
 	{ -1,        0,     BAR_ALIGN_NONE,   width_wintitle,           draw_wintitle,          click_wintitle,          NULL,                    "wintitle" },
 };
 
@@ -184,10 +187,11 @@ static const int lockfullscreen     = 1;    /* 1 will force focus on the fullscr
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[T]",      tile },    /* first entry is default */
-	{ "[F]",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
+	{ "󰙀 =",      tile },    /* first entry is default */
+	{ " =",      NULL },    /* no layout function means floating behavior */
+	{ " =",      monocle },
 };
+// 󰙀   
 
 /* key definitions */
 #define MODKEY Mod4Mask
