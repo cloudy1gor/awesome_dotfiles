@@ -149,6 +149,8 @@ static const Rule rules[] = {
 	// RULE(.class = "obs", 								.tags = 1 << 7)
 	RULE(.class = "qBittorrent", 				.tags = 1 << 3, .switchtag = 1)
 	RULE(.class = "Virt-manager", 			.tags = 1 << 7, .switchtag = 1)
+	RULE(.class = "WebWorkTracker", 		.switchtag = 1, .isfloating = 1)
+	RULE(.class = "jetbrains-phpstorm", .tags = 1 << 7, .switchtag = 1)
 
 	/* Scratchpads rules */ 
 	RULE(.class = "dropdown", 					.isfloating = 1, .floatpos = "30% 30% 50% 60%")
