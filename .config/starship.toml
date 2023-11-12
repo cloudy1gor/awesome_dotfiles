@@ -71,6 +71,8 @@ disabled = true
 
 [docker_context]
 symbol = " "
+style = "bg:#c9c9c9"
+format = '[[ $symbol ($version) ](fg:#000000 bg:#c9c9c9)]($style)'
 
 [nodejs]
 symbol = ""
@@ -94,6 +96,8 @@ format = '[[ $symbol ($version) ](fg:#000000 bg:#c9c9c9)]($style)'
 
 [python]
 symbol = " "
+style = "bg:#c9c9c9"
+format = '[[ $symbol ($version) ](fg:#000000 bg:#c9c9c9)]($style)'
 
 [time]
 disabled = false
