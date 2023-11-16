@@ -53,7 +53,7 @@ static char normfloatcolor[]             = "#005577";
 
 static char selfgcolor[]                 = "#393737";
 static char selbgcolor[]                 = "#ffffff";
-static char selbordercolor[]             = "#6C7A89";
+static char selbordercolor[]             = "#000000";
 static char selfloatcolor[]              = "#005577";
 
 static char titlenormfgcolor[]           = "#393737";
@@ -143,13 +143,14 @@ static const Rule rules[] = {
 	RULE(.title = "Discord Updater", 		.tags = 1 << 4, .isfloating = 1, .floatpos = "50% 50%")
 	RULE(.class = "discord",         		.tags = 1 << 4)
 	RULE(.class = "TelegramDesktop", 		.tags = 1 << 4, .isfloating = 1)
+	RULE(.instance = "Slack", 					.tags = 1 << 4, .switchtag = 1)
 	RULE(.class = "zoom", 							.tags = 1 << 4, .switchtag = 1, .isfloating = 1)
 	RULE(.class = "obsidian",        		.tags = 1 << 5, .switchtag = 1)
 	RULE(.class = "Thunar", 						.tags = 1 << 2, .switchtag = 1)
-	// RULE(.class = "obs", 								.tags = 1 << 7)
+	RULE(.class = "obs", 								.tags = 1 << 7)
 	RULE(.class = "qBittorrent", 				.tags = 1 << 3, .switchtag = 1)
 	RULE(.class = "Virt-manager", 			.tags = 1 << 7, .switchtag = 1)
-	RULE(.class = "WebWorkTracker", 		.switchtag = 1, .isfloating = 1)
+	RULE(.class = "WebWorkTracker", 		.tags = 1 << 3, .switchtag = 1, .isfloating = 1)
 	RULE(.class = "jetbrains-phpstorm", .tags = 1 << 7, .switchtag = 1)
 
 	/* Scratchpads rules */ 
