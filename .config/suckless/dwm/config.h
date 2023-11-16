@@ -41,7 +41,9 @@ static const int smartgaps_fact          = 1; /* 1 means no outer gap when there
 static int tagindicatortype              = INDICATOR_TOP_LEFT_SQUARE;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_SQUARE;
-static const char *fonts[]               = { "JetBrainsMono Nerd Font:size=12:antialias=true:autohint=true" };
+static const char *fonts[]               = { "JetBrainsMono NF:style=Bold:size=12:antialias=true:autohint=true" };
+// static const char *fonts[]               = { "JetBrainsMono NF:style=Bold Italic:size=12:antialias=true:autohint=true" };
+// static const char *fonts[]               = { "JetBrainsMono NF SemiBold:style=SemiBold,Regular:size=12:antialias=true:autohint=true" };
 static const char dmenufont[]            = "JetBrainsMono Nerd Font:size=12:antialias=true:autohint=true";
 
 static char c000000[]                    = "#000000"; // placeholder value
