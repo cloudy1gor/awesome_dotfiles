@@ -46,21 +46,20 @@ XRENDER = -lXrender
 #XEXTLIB = -lXext
 
 # Uncomment this for the swallow patch / SWALLOW_PATCH
-XCBLIBS = -lX11-xcb -lxcb -lxcb-res
+#XCBLIBS = -lX11-xcb -lxcb -lxcb-res
 
 # This is needed for the winicon and tagpreview patches / BAR_WINICON_PATCH / BAR_TAGPREVIEW_PATCH
-IMLIB2LIBS = -lImlib2
-IMLIB2INC = -I/usr/include/imlib2
+#IMLIB2LIBS = -lImlib2
 
 # Uncomment for the bidi patch
 #BDINC = `pkg-config --cflags fribidi`
 #BDLIBS = `pkg-config --libs fribidi`
 
 # includes and libs
-# INCS = -I${X11INC} -I${FREETYPEINC} ${YAJLINC} ${PANGOINC} ${BDINC}
+INCS = -I${X11INC} -I${FREETYPEINC} ${YAJLINC} ${PANGOINC} ${BDINC}
 # LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS}  ${XRENDER} ${MPDCLIENT} ${XEXTLIB} ${XCBLIBS} ${KVMLIB} ${PANGOLIB} ${YAJLLIBS} ${IMLIB2LIBS} $(BDLIBS)
-LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS} ${XRENDER} ${MPDCLIENT} ${XEXTLIB} ${XCBLIBS} ${KVMLIB} ${PANGOLIB} ${YAJLLIBS} ${IMLIB2LIBS}
-INCS = -I${X11INC} -I${FREETYPEINC} ${YAJLINC} ${PANGOINC} ${BDINC} ${IMLIB2INC}
+# LIBS = -L/usr/X11R6/lib -lX11 -lXinerama -lfontconfig -lXft -lXrender -lImlib2 -lxcb-res
+LIBS = -L/usr/X11R6/lib -lX11 -lXinerama -lfontconfig -lXft -lXrender -lImlib2 -lxcb-res -lX11-xcb
 
 
 # flags
