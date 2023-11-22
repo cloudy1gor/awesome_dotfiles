@@ -43,7 +43,6 @@ static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_SQUARE;
 static const char *fonts[]               = { "JetBrainsMono NF:style=Bold:size=12:antialias=true:autohint=true" };
 // static const char *fonts[]               = { "JetBrainsMono NF:style=Bold Italic:size=12:antialias=true:autohint=true" };
-// static const char *fonts[]               = { "JetBrainsMono NF SemiBold:style=SemiBold,Regular:size=12:antialias=true:autohint=true" };
 static const char dmenufont[]            = "JetBrainsMono Nerd Font:size=12:antialias=true:autohint=true";
 
 static char c000000[]                    = "#000000"; // placeholder value
@@ -149,7 +148,7 @@ static const Rule rules[] = {
 	RULE(.class = "Pavucontrol", 				.tags = 1 << 0, .switchtag = 1, .isfloating = 1, .floatpos = "40% 40% 70% 80%")
 	RULE(.class = "Safeeyes", 					.tags = 1 << 3, .isfloating = 1, .floatpos = "30 70")
 	RULE(.class = "qutebrowser", 				.tags = 1 << 1, .switchtag = 1 )
-	RULE(.class = "vivaldi-stable", 		.tags = 1 << 1, .switchtag = 1)
+	RULE(.class = "Vivaldi-stable", 		.tags = 1 << 1, .switchtag = 1)
 	RULE(.class = "Brave-browser", 			.tags = 1 << 1, .switchtag = 1 )
 	RULE(.class = "KeePassXC", 					.tags = 1 << 3, .switchtag = 1, .isfloating = 1, .floatpos = "40% 40% 70% 80%")
 	RULE(.class = "kitty", 							.isterminal = 1)
@@ -157,7 +156,7 @@ static const Rule rules[] = {
 	RULE(.title = "Discord Updater", 		.tags = 1 << 4, .isfloating = 1, .floatpos = "50% 50%")
 	RULE(.class = "discord",         		.tags = 1 << 4)
 	RULE(.class = "TelegramDesktop", 		.tags = 1 << 4, .isfloating = 1)
-	RULE(.instance = "Slack", 					.tags = 1 << 4, .switchtag = 1)
+	RULE(.class = "slack", 							.tags = 1 << 4, .switchtag = 1)
 	RULE(.class = "zoom", 							.tags = 1 << 4, .switchtag = 1, .isfloating = 1)
 	RULE(.class = "obsidian",        		.tags = 1 << 5, .switchtag = 1)
 	RULE(.class = "Thunar", 						.tags = 1 << 2, .switchtag = 1)
@@ -307,7 +306,7 @@ static const Key keys[] = {
 	/* Apps */
 	{ 0,                       			XK_Print, 		 spawn,      SHCMD("flameshot gui") },
 	{ MODKEY,                       XK_BackSpace,  spawn,      SHCMD("Thunar") },
-	{ MODKEY,                       XK_w, 		 		 spawn,      SHCMD("qutebrowser") },
+	{ MODKEY,                       XK_w, 		 		 spawn,      SHCMD("vivaldi-stable") },
 	{ MODKEY,                       XK_n, 		 		 spawn,      SHCMD("kitty nvim") },
 	{ MODKEY|ShiftMask, 						XK_e, 				 spawn, 		 SHCMD("~/.config/rofi/powermenu.sh") },
 
