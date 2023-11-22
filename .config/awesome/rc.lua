@@ -19,7 +19,7 @@ systray.set_base_size(25)
 local separator = wibox.widget.separator()
 separator.forced_width = 10
 
-local separator_text = wibox.widget.textbox(")")
+local separator_text = wibox.widget.textbox("|")
 separator_text.font = "JetBrainsMono Nerd Font 26"
 
 -- Displays names
@@ -28,7 +28,7 @@ local display_external = "HDMI-A-0"
 
 -- Set rounded corners
 function custom_shape(cr, width, height)
-    gears.shape.rounded_rect(cr, width, height, 18)
+    gears.shape.rounded_rect(cr, width, height, 8)
 end
 
 beautiful.init("~/.config/awesome/mytheme.lua")
@@ -161,7 +161,7 @@ awful.screen.connect_for_each_screen(function(s)
         position = "bottom",
         screen = s,
         width = screen[1].geometry.width * 0.45,
-        height = 34,
+        height = 30,
         border_width = beautiful.border_width,
         shape = custom_shape,
         border_color = beautiful.border_focus,
@@ -174,14 +174,14 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.layout.margin(systray, 13, 0, 5, 5),
-            separator_text
+            -- separator_text
         },
         -- Middle widget
         s.mytaglist,
         expand = "outside",
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            wibox.widget.textbox("               "),
+            wibox.widget.textbox("                "),
             wibox.layout.margin(s.mylayoutbox, 4, 4, 4, 4)
         }
     }
@@ -232,8 +232,16 @@ globalkeys = gears.table.join(
 
     -- Standard program
     awful.key({ modkey }, "Return", function() awful.spawn(terminal) end),
+    awful.key({ modkey, "Shift" }, "Return", function ()
+        awful.spawn(terminal, {
+            floating = true,
+            width = 1200,
+            height = 800,
+            placement = awful.placement.centered
+        })
+    end),
     awful.key({ modkey }, "BackSpace", function() awful.spawn("thunar") end),
-    awful.key({ modkey }, "w", function() awful.spawn("qutebrowser") end),
+    awful.key({ modkey }, "w", function() awful.spawn("vivaldi-stable") end),
     awful.key({ modkey }, "c", function() awful.spawn("code") end),
     awful.key({ modkey, "Shift" }, "r", awesome.restart),
     awful.key({ modkey, "Shift" }, "q", awesome.quit),
@@ -406,7 +414,7 @@ awful.rules.rules = { -- All clients will match this rule.
                     "Sxiv", "Wpa_gui", "veromix", "xtightvncviewer", "confirm",
                     "confirmreset", "dialog", "download", "error", "file_progress",
                     "Gnome-screenshot", "makebranch", "maketag", "notification",
-                    "Pavucontrol", "splash", "ssh-askpass", "toolbar"
+                    "Pavucontrol", "splash", "ssh-askpass", "toolbar", "WebWorkTracker"
                 },
 
                 -- Note that the name property shown in xprop might be set slightly after creation of the client
@@ -473,6 +481,7 @@ awful.rules.rules = { -- All clients will match this rule.
             end
         },
 
+        
         {
             rule_any = {
                 name = {
@@ -480,7 +489,7 @@ awful.rules.rules = { -- All clients will match this rule.
                     "Tor Browser",
                     "LibreWolf",
                     "qutebrowser",
-                    "Vivaldi-stable",
+                    "vivaldi-stable",
                     "Chromium",
                     "Google-chrome",
                     "Brave-browser"
@@ -596,7 +605,7 @@ awful.spawn.with_shell("ksuperkey -e 'Super_L=Alt_L|F1' & ksuperkey -e 'Super_R=
 awful.spawn.with_shell("feh --bg-scale --randomize --no-fehbg ~/Pictures/Wallpapers/*")
 -- awful.spawn.with_shell("picom -CGb --config ~/.config/picom.conf")
 awful.spawn.with_shell("~/.config/polybar/launch.sh")
-awful.spawn.with_shell("~/.config/awesome/scripts/autostart.sh")
+awful.spawn.with_shell("~/.local/bin/autostart.sh")
 awful.spawn.with_shell("~/.config/awesome/scripts/battery_monitor.sh")
 
 -- Enable sloppy focus, so that focus follows mouse.
@@ -612,7 +621,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- Rounded corners for all windows
 client.connect_signal("manage", function(c)
     c.shape = function(cr, w, h)
-        gears.shape.rounded_rect(cr, w, h, 18)
+        gears.shape.rounded_rect(cr, w, h, 8)
     end
 end)
 
