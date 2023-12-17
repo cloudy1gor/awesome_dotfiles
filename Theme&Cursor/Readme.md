@@ -2,5 +2,5 @@
 
 ```sh
 sudo tar xvf WhiteSur-Light-solid.tar.xz -C /usr/share/themes/
-sudo cp -r Future-cursor /usr/share/icons/
+sudo tar -xzvf Future-cursor.tar.gz -C /usr/share/icons/
 ```
