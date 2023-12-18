@@ -1,8 +1,8 @@
 #!/bin/bash
 
 ### VARIABLES
-POLL_INTERVAL=600     # seconds at which to check battery level
-LOW_BAT=15            # lesser than this is considered low battery
+POLL_INTERVAL=60    # seconds at which to check battery level
+LOW_BAT=15          # lesser than this is considered low battery
 
 # If BAT0 doesn't work for you, check available devices with command below
 #
@@ -37,6 +37,7 @@ check_battery_level() {
     local battery_percentage=$(acpi -b | grep -P -o '[0-9]+(?=%)')
     if [ "$battery_percentage" -lt "$LOW_BAT" ]; then
         notify-send --urgency=critical "$battery_percentage% : Low Battery!" -i "~/.config/dunst/icons/skull.svg"
+        paplay ~/.config/dunst/battery_critical.mp3
     fi
 }
 
