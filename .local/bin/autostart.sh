@@ -9,7 +9,7 @@ else
     restart=( "redshift" "-P" "-O" "5000" )
 fi
 
-declare -a apps=("conky -c ~/.config/conky/conky.conf" "/usr/bin/dunst" "copyq" "megasync" "telegram-desktop" "safeeyes" "espanso service start --unmanaged" "glava" )
+declare -a apps=("bash ~/.config/conky/conky_start.sh" "/usr/bin/dunst" "copyq" "megasync" "telegram-desktop" "safeeyes" "espanso service start --unmanaged" "glava" )
 
 for app in "${apps[@]}"; do
     if [[ $(pidof "${app}") ]]; then

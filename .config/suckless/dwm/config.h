@@ -165,6 +165,7 @@ static const Rule rules[] = {
 	RULE(.class = "Virt-manager", 			.tags = 1 << 7, .switchtag = 1)
 	RULE(.class = "WebWorkTracker", 		.tags = 1 << 3, .switchtag = 1, .isfloating = 1)
 	RULE(.class = "jetbrains-phpstorm", .tags = 1 << 7, .switchtag = 1)
+	RULE(.class = "Code - OSS", 				.tags = 1 << 7, .switchtag = 1)
 
 	/* Scratchpads rules */ 
 	RULE(.class = "dropdown", 					.isfloating = 1, .floatpos = "30% 30% 50% 60%")
@@ -306,7 +307,7 @@ static const Key keys[] = {
 	/* Apps */
 	{ 0,                       			XK_Print, 		 spawn,      SHCMD("flameshot gui") },
 	{ MODKEY,                       XK_BackSpace,  spawn,      SHCMD("Thunar") },
-	{ MODKEY,                       XK_w, 		 		 spawn,      SHCMD("vivaldi-stable") },
+	{ MODKEY,                       XK_w, 		 		 spawn,      SHCMD("brave-browser-stable") },
 	{ MODKEY,                       XK_n, 		 		 spawn,      SHCMD("kitty nvim") },
 	{ MODKEY|ShiftMask, 						XK_e, 				 spawn, 		 SHCMD("~/.config/rofi/powermenu.sh") },
 
@@ -316,7 +317,7 @@ static const Key keys[] = {
 
 static const char *const autostart[] = {
     "sh", "-c", "~/.local/bin/autostart.sh", NULL,
-    "sh", "-c", "~/.local/bin/battery_monitor.sh", NULL,
+    "bash", "-c", "~/.local/bin/battery_monitor.sh", NULL,
     NULL
 };
 /* button definitions */
