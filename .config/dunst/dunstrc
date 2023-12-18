@@ -11,7 +11,7 @@
     width = 300
     height = 400
     origin = top-right
-    offset = 8x47
+    offset = 6x47
     scale = 1
     indicate_hidden = yes
     timeout = 4
@@ -52,8 +52,11 @@
 	startup_notification = false
 	force_xinerama = false
 	corner_radius = 4
-    [experimental]
+[experimental]
 	per_monitor_dpi = false
+[play_sound]
+    summary = "*"
+    script = ~/.local/bin/notification.sh
 [shortcuts]
 	close = 
 	close_all = 
