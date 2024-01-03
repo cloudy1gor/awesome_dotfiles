@@ -159,7 +159,7 @@ static const Rule rules[] = {
 	RULE(.class = "slack", 							.tags = 1 << 4, .switchtag = 1)
 	RULE(.class = "zoom", 							.tags = 1 << 4, .switchtag = 1, .isfloating = 1)
 	RULE(.class = "obsidian",        		.tags = 1 << 5, .switchtag = 1)
-	RULE(.class = "Thunar", 						.tags = 1 << 2, .switchtag = 1)
+	RULE(.class = "nemo", 							.tags = 1 << 2, .switchtag = 1)
 	RULE(.class = "obs", 								.tags = 1 << 7)
 	RULE(.class = "qBittorrent", 				.tags = 1 << 3, .switchtag = 1)
 	RULE(.class = "Virt-manager", 			.tags = 1 << 7, .switchtag = 1)
@@ -306,7 +306,7 @@ static const Key keys[] = {
 
 	/* Apps */
 	{ 0,                       			XK_Print, 		 spawn,      SHCMD("flameshot gui") },
-	{ MODKEY,                       XK_BackSpace,  spawn,      SHCMD("Thunar") },
+	{ MODKEY,                       XK_BackSpace,  spawn,      SHCMD("nemo") },
 	{ MODKEY,                       XK_w, 		 		 spawn,      SHCMD("brave-browser-stable") },
 	{ MODKEY,                       XK_n, 		 		 spawn,      SHCMD("kitty nvim") },
 	{ MODKEY|ShiftMask, 						XK_e, 				 spawn, 		 SHCMD("~/.config/rofi/powermenu.sh") },
