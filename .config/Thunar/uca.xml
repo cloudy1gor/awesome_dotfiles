@@ -39,7 +39,7 @@
 	<name>Open folder as root</name>
 	<submenu></submenu>
 	<unique-id>1493475601060449-3</unique-id>
-	<command>gksudo thunar %d</command>
+	<command>sudo thunar %d</command>
 	<description></description>
 	<range></range>
 	<patterns>*</patterns>
@@ -50,7 +50,7 @@
 	<name>Edit as root</name>
 	<submenu></submenu>
 	<unique-id>1526631419798289-11</unique-id>
-	<command>gksudo kitty micro %F</command>
+	<command>sudo kitty nvim %F</command>
 	<description>edit as root</description>
 	<range></range>
 	<patterns>*</patterns>

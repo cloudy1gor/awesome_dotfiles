@@ -127,7 +127,6 @@ static Sp scratchpads[] = {
 
 static char *tagicons[][NUMTAGS] =
 {
-	// [DEFAULT_TAGS]        = { "󰅬", "", "", "", "", "", "", "󰨞", "" },
 	[DEFAULT_TAGS]        = { "", "󰊯", "", "", "󱋊", "󱇨", "󰘦", "󱀫", "󰎅" },
 	// [DEFAULT_TAGS]        = { ">_", "www", "~/", "{-}", ":::", "-_-", "Vi", "||", "mp3" },
 	[ALT_TAGS_DECORATION] = { "󰅬", "", "", "", "󰭻", "󰷈", "", "󰨞", "󰎄" },
@@ -155,12 +154,12 @@ static const Rule rules[] = {
 	RULE(.instance = "spterm", 					.tags = SPTAG(0), .isfloating = 1)
 	RULE(.title = "Discord Updater", 		.tags = 1 << 4, .isfloating = 1, .floatpos = "50% 50%")
 	RULE(.class = "discord",         		.tags = 1 << 4)
-	RULE(.class = "TelegramDesktop", 		.tags = 1 << 4, .isfloating = 1)
+	RULE(.class = "TelegramDesktop", 		.tags = 1 << 4, .isfloating = 1, .switchtag = 1)
 	RULE(.class = "slack", 							.tags = 1 << 4, .switchtag = 1)
 	RULE(.class = "zoom", 							.tags = 1 << 4, .switchtag = 1, .isfloating = 1)
 	RULE(.class = "obsidian",        		.tags = 1 << 5, .switchtag = 1)
-	RULE(.class = "nemo", 							.tags = 1 << 2, .switchtag = 1)
-	RULE(.class = "obs", 								.tags = 1 << 7)
+	RULE(.class = "Thunar", 						.tags = 1 << 2, .switchtag = 1)
+	// RULE(.class = "obs", 								.tags = 1 << 3)
 	RULE(.class = "qBittorrent", 				.tags = 1 << 3, .switchtag = 1)
 	RULE(.class = "Virt-manager", 			.tags = 1 << 7, .switchtag = 1)
 	RULE(.class = "WebWorkTracker", 		.tags = 1 << 3, .switchtag = 1, .isfloating = 1)
@@ -168,7 +167,7 @@ static const Rule rules[] = {
 	RULE(.class = "Code - OSS", 				.tags = 1 << 7, .switchtag = 1)
 
 	/* Scratchpads rules */ 
-	RULE(.class = "dropdown", 					.isfloating = 1, .floatpos = "30% 30% 50% 60%")
+	RULE(.class = "dropdown", 					.isfloating = 1, .floatpos = "35% 35% 55% 65%")
 	RULE(.class = "files", 							.isfloating = 1, .floatpos = "40% 40% 70% 80%")
 	RULE(.class = "monitor", 						.isfloating = 1, .floatpos = "50% 50% 60% 70%")
 
@@ -233,7 +232,7 @@ static const Key keys[] = {
 	{ Mod1Mask,                     XK_F1,         spawn,          {.v = rofidruncmd } },
 	{ MODKEY,					              XK_Return,     spawn,          {.v = termcmd } },
 	{Mod1Mask, 											XK_Tab,		     spawn, 			 	 {.v = windowswitchcmd}},
-	{ MODKEY,                       XK_d,          togglebar,      {0} },
+	{ MODKEY,                       XK_b,          togglebar,      {0} },
 	{ MODKEY,                       XK_j,          focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,          focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,          incnmaster,     {.i = +1 } },
@@ -252,9 +251,9 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_space,      togglefloating, {0} },
 	{ MODKEY|ShiftMask,             XK_s,          togglesticky,   {0} },
 
-	// { MODKEY,                       XK_t,      togglescratch,          {.ui = 0 } },
-	// { MODKEY|ControlMask,           XK_t,      setscratch,             {.ui = 0 } },
-	// { MODKEY|ShiftMask,             XK_t,      removescratch,          {.ui = 0 } },
+	{ MODKEY,                       XK_i,      togglescratch,          {.ui = 0 } },
+	{ MODKEY|ControlMask,           XK_i,      setscratch,             {.ui = 0 } },
+	{ MODKEY|ShiftMask,             XK_i,      removescratch,          {.ui = 0 } },
 	{MODKEY|ShiftMask,              XK_Return,     togglescratch,  {.ui = 0}},
   {MODKEY|ShiftMask,              XK_BackSpace,  togglescratch,  {.ui = 1}},
   {Mod1Mask,                      XK_m,      		 togglescratch,  {.ui = 2}},
@@ -277,23 +276,23 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_9,                      		 8)
 	{ MODKEY|ShiftMask,             XK_q,      		 quit,           {0} },
 
-	{ MODKEY|Mod4Mask,              XK_u,          incrgaps,               {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_u,          incrgaps,               {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_i,          incrigaps,              {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_i,          incrigaps,              {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_o,          incrogaps,              {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_o,          incrogaps,              {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_6,          incrihgaps,             {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_6,          incrihgaps,             {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_7,          incrivgaps,             {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_7,          incrivgaps,             {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_8,          incrohgaps,             {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_8,          incrohgaps,             {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_9,          incrovgaps,             {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_9,          incrovgaps,             {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_0,          togglegaps,             {0} },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_0,          defaultgaps,            {0} },
-
+	// { MODKEY|Mod4Mask,              XK_u,          incrgaps,               {.i = +1 } },
+	// { MODKEY|Mod4Mask|ShiftMask,    XK_u,          incrgaps,               {.i = -1 } },
+	// { MODKEY|Mod4Mask,              XK_i,          incrigaps,              {.i = +1 } },
+	// { MODKEY|Mod4Mask|ShiftMask,    XK_i,          incrigaps,              {.i = -1 } },
+	// { MODKEY|Mod4Mask,              XK_o,          incrogaps,              {.i = +1 } },
+	// { MODKEY|Mod4Mask|ShiftMask,    XK_o,          incrogaps,              {.i = -1 } },
+	// { MODKEY|Mod4Mask,              XK_6,          incrihgaps,             {.i = +1 } },
+	// { MODKEY|Mod4Mask|ShiftMask,    XK_6,          incrihgaps,             {.i = -1 } },
+	// { MODKEY|Mod4Mask,              XK_7,          incrivgaps,             {.i = +1 } },
+	// { MODKEY|Mod4Mask|ShiftMask,    XK_7,          incrivgaps,             {.i = -1 } },
+	// { MODKEY|Mod4Mask,              XK_8,          incrohgaps,             {.i = +1 } },
+	// { MODKEY|Mod4Mask|ShiftMask,    XK_8,          incrohgaps,             {.i = -1 } },
+	// { MODKEY|Mod4Mask,              XK_9,          incrovgaps,             {.i = +1 } },
+	// { MODKEY|Mod4Mask|ShiftMask,    XK_9,          incrovgaps,             {.i = -1 } },
+	// { MODKEY|Mod4Mask,              XK_0,          togglegaps,             {0} },
+	// { MODKEY|Mod4Mask|ShiftMask,    XK_0,          defaultgaps,            {0} },
+	//
 	
 	/* Brightness & Volume */
 	{ 0, 														0x1008ff02,		 spawn,			 SHCMD("~/.local/bin/brightness.sh up") },
@@ -301,12 +300,13 @@ static const Key keys[] = {
 	{ 0, 														0x1008ff13,		 spawn, 		 SHCMD("~/.local/bin/volume.sh up") },
 	{ 0, 														0x1008ff11,		 spawn, 		 SHCMD("~/.local/bin/volume.sh down") },
 	{ 0, 														0x1008ff12,		 spawn, 		 SHCMD("~/.local/bin/volume.sh mute") },
+	{ MODKEY|ShiftMask, 						XK_d,  			 	 spawn, 		 SHCMD("~/.local/bin/display_toggle.sh") },
   // { MODKEY,              					XK_F4,      	 spawn, 		 SHCMD("~/.local/bin/temperature.sh cooler") },
   // { MODKEY,             					XK_F3,      	 spawn, 		 SHCMD("~/.local/bin/temperature.sh warmer") },
 
 	/* Apps */
 	{ 0,                       			XK_Print, 		 spawn,      SHCMD("flameshot gui") },
-	{ MODKEY,                       XK_BackSpace,  spawn,      SHCMD("nemo") },
+	{ MODKEY,                       XK_BackSpace,  spawn,      SHCMD("Thunar") },
 	{ MODKEY,                       XK_w, 		 		 spawn,      SHCMD("brave-browser-stable") },
 	{ MODKEY,                       XK_n, 		 		 spawn,      SHCMD("kitty nvim") },
 	{ MODKEY|ShiftMask, 						XK_e, 				 spawn, 		 SHCMD("~/.config/rofi/powermenu.sh") },
