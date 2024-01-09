@@ -1,4 +1,4 @@
-# Awesome dotfiles for the Void linux
+# Awesome dotfiles for Void linux
 
 ![](/screenshot.png)
 
