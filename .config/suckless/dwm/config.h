@@ -145,6 +145,7 @@ static const Rule rules[] = {
 	RULE(.wintype = WTYPE "SPLASH", 		.isfloating = 1)
 
 	RULE(.class = "Pavucontrol", 				.tags = 1 << 0, .switchtag = 1, .isfloating = 1, .floatpos = "40% 40% 70% 80%")
+	RULE(.class = "connman-gtk", 				.tags = 1 << 0, .switchtag = 1, .isfloating = 1, .floatpos = "40% 40% 70% 80%")
 	RULE(.class = "Safeeyes", 					.tags = 1 << 3, .isfloating = 1, .floatpos = "30 70")
 	RULE(.class = "qutebrowser", 				.tags = 1 << 1, .switchtag = 1 )
 	RULE(.class = "Vivaldi-stable", 		.tags = 1 << 1, .switchtag = 1)
