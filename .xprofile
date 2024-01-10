@@ -52,3 +52,4 @@ export XDG_SESSION_DESKTOP=dwm
 export XDG_CURRENT_DESKTOP=dwm
 export DESKTOP_SESSION=dwm
 export XDG_SESSION_TYPE=x11
+
