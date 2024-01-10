@@ -23,22 +23,22 @@ xsetroot -cursor_name left_ptr &
 feh --bg-scale --randomize --no-fehbg ~/Pictures/Wallpapers/*
 
 # Keyboard
-# setxkbmap -option grp:win_space_toggle us,ru &
-setxkbmap -option grp:alt_shift_toggle us,ru &
+# setxkbmap -option grp:win_space_toggle us,ua &
+# setxkbmap -option grp:alt_shift_toggle us,ua &
 
 # Keyboard repeat
 xset r rate 300 50 &
 
 # Touchpad
-xinput set-prop "ELAN0504:01 04F3:312B Touchpad" "libinput Tapping Enabled" 1
-xinput set-prop "ELAN0504:01 04F3:312B Touchpad" "libinput Tapping Drag Enabled" 1
-xinput set-prop "ELAN0504:01 04F3:312B Touchpad" "libinput libinput Scroll Method Enabled" 1, 0, 0
-xinput set-prop "ELAN0504:01 04F3:312B Touchpad" "libinput Disable While Typing Enabled" 1
-xinput set-prop "ELAN0504:01 04F3:312B Touchpad" "libinput Accel Speed" 0.6
-xinput set-prop "ELAN0504:01 04F3:312B Touchpad" "libinput Scrolling Pixel Distance" 20
-xinput set-prop "ELAN0504:01 04F3:312B Touchpad" "libinput Accel Profile Enabled" 1
-xinput set-prop "ELAN0504:01 04F3:312B Touchpad" "libinput Natural Scrolling Enabled" 1
-xinput set-prop "ELAN0504:01 04F3:312B Touchpad" "libinput Middle Emulation Enabled" 1
+# xinput set-prop "ELAN0504:01 04F3:312B Touchpad" "libinput Tapping Enabled" 1
+# xinput set-prop "ELAN0504:01 04F3:312B Touchpad" "libinput Tapping Drag Enabled" 1
+# xinput set-prop "ELAN0504:01 04F3:312B Touchpad" "libinput libinput Scroll Method Enabled" 1, 0, 0
+# xinput set-prop "ELAN0504:01 04F3:312B Touchpad" "libinput Disable While Typing Enabled" 1
+# xinput set-prop "ELAN0504:01 04F3:312B Touchpad" "libinput Accel Speed" 0.6
+# xinput set-prop "ELAN0504:01 04F3:312B Touchpad" "libinput Scrolling Pixel Distance" 20
+# xinput set-prop "ELAN0504:01 04F3:312B Touchpad" "libinput Accel Profile Enabled" 1
+# xinput set-prop "ELAN0504:01 04F3:312B Touchpad" "libinput Natural Scrolling Enabled" 1
+# xinput set-prop "ELAN0504:01 04F3:312B Touchpad" "libinput Middle Emulation Enabled" 1
 
 # Set GTK theme, icons, cursor
 xsettingsd &
@@ -48,4 +48,7 @@ xsettingsd &
 
 # Set default terminal
 export TERMINAL="/usr/bin/kitty"
-
+export XDG_SESSION_DESKTOP=dwm
+export XDG_CURRENT_DESKTOP=dwm
+export DESKTOP_SESSION=dwm
+export XDG_SESSION_TYPE=x11
