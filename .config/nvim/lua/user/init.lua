@@ -23,7 +23,7 @@ return {
 
     {
       "ellisonleao/gruvbox.nvim",
-      as = gruvbox,
+      as = "gruvbox",
       priority = 1000,
       config = function()
         require("gruvbox").setup {
@@ -32,7 +32,6 @@ return {
         vim.cmd [[colorscheme gruvbox]]
       end,
     },
-
     {
       "mattn/emmet-vim",
       ft = { "html", "css", "javascript", "typescript", "php", "twig" },
