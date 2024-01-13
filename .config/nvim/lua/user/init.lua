@@ -1,25 +1,35 @@
 return {
   -- Set colorscheme to use
-  colorscheme = "onenord",
+  colorscheme = "gruvbox",
 
   vim.opt.clipboard:append "unnamedplus",
 
-    options = {
+  options = {
     opt = {
       relativenumber = false,
       signcolumn = "auto",
       spell = true,
+      background = "light",
     },
   },
 
   plugins = {
     {
-      "rmehri01/onenord.nvim",
-      as = "onenord",
+      "mg979/vim-visual-multi",
+      lazy = true,
+      event = "BufReadPost",
+      setup = function() require "custom.configs.visual-multi" end,
+    },
+
+    {
+      "ellisonleao/gruvbox.nvim",
+      as = gruvbox,
+      priority = 1000,
       config = function()
-        require('onenord').setup({
-          theme = "light", -- "dark" or "light".
-        })
+        require("gruvbox").setup {
+          contrast = "hard",
+        }
+        vim.cmd [[colorscheme gruvbox]]
       end,
     },
 
@@ -32,15 +42,15 @@ return {
       "chentoast/marks.nvim",
       as = "marks",
       config = function()
-        require('marks').setup({
+        require("marks").setup {
           mappings = {
             set_next = "m,",
             next = "m]",
             preview = "m:",
             set_bookmark0 = "m0",
-            prev = false -- pass false to disable only this default mapping
-          }
-        })
+            prev = false, -- pass false to disable only this default mapping
+          },
+        }
       end,
     },
 
@@ -52,7 +62,7 @@ return {
             hide_dotfiles = false,
           },
         },
-      }
+      },
     },
 
     {
@@ -72,58 +82,56 @@ return {
       },
     },
 
-  lsp = {
-    servers = {
-      "bashls",
-      "cssls",
-      "emmetls",
-      "eslint",
-      "html",
-      "jsonls",
-      "jsonnet_ls",
-      "pylsp",
-      "tsserver",
-      "intelephense",
-      "twig",
-      "yamlls",
-      "dockerls",
-    },
-
-    formatting = {
-      disabled = {
-        -- use null-ls' gofumpt/goimports instead
-        -- https://github.com/golang/tools/pull/410
-        -- use null-ls' prettier instead
+    lsp = {
+      servers = {
+        "bashls",
+        "cssls",
+        "emmetls",
+        "eslint",
+        "html",
+        "jsonls",
+        "jsonnet_ls",
+        "pylsp",
         "tsserver",
+        "intelephense",
+        "twig",
+        "yamlls",
+        "dockerls",
       },
-      format_on_save = {
-        enabled = true,
-        allow_filetypes = {
-          "jsonnet",
-          "lua",
+
+      formatting = {
+        disabled = {
+          -- use null-ls' gofumpt/goimports instead
+          -- https://github.com/golang/tools/pull/410
+          -- use null-ls' prettier instead
+          "tsserver",
+        },
+        format_on_save = {
+          enabled = true,
+          allow_filetypes = {
+            "jsonnet",
+            "lua",
+          },
         },
       },
     },
-  },
 
-  {
+    {
       "goolord/alpha-nvim",
       opts = function(_, opts) -- override the options using lazy.nvim
         opts.section.header.val = { -- change the header section value
           "                                                                       ",
-	        "                                                                     ",
-	        "       ████ ██████           █████      ██                     ",
-	        "      ███████████             █████                             ",
-	        "      █████████ ███████████████████ ███   ███████████   ",
-	        "     █████████  ███    █████████████ █████ ██████████████   ",
-	        "    █████████ ██████████ █████████ █████ █████ ████ █████   ",
-	        "  ███████████ ███    ███ █████████ █████ █████ ████ █████  ",
-	        " ██████  █████████████████████ ████ █████ █████ ████ ██████ ",
-	        "                                                                       ",
+          "                                                                     ",
+          "       ████ ██████           █████      ██                     ",
+          "      ███████████             █████                             ",
+          "      █████████ ███████████████████ ███   ███████████   ",
+          "     █████████  ███    █████████████ █████ ██████████████   ",
+          "    █████████ ██████████ █████████ █████ █████ ████ █████   ",
+          "  ███████████ ███    ███ █████████ █████ █████ ████ █████  ",
+          " ██████  █████████████████████ ████ █████ █████ ████ ██████ ",
+          "                                                                       ",
         }
       end,
     },
-
-
-}
+  },
 }
