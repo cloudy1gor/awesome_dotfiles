@@ -166,6 +166,10 @@ static const Rule rules[] = {
 	RULE(.class = "WebWorkTracker", 		.tags = 1 << 3, .switchtag = 1, .isfloating = 1)
 	RULE(.class = "jetbrains-phpstorm", .tags = 1 << 7, .switchtag = 1)
 	RULE(.class = "Code - OSS", 				.tags = 1 << 7, .switchtag = 1)
+	RULE(.class = "shotcut", 						.tags = 1 << 8, .switchtag = 1)
+	RULE(.class = "scrcpy", 						.tags = 1 << 8, .switchtag = 1)
+	RULE(.class = "ghb", 								.tags = 1 << 8, .switchtag = 1)
+	RULE(.class = "libreoffice", 				.tags = 1 << 5, .switchtag = 1)
 
 	/* Scratchpads rules */ 
 	RULE(.class = "dropdown", 					.isfloating = 1, .floatpos = "35% 35% 55% 65%")
