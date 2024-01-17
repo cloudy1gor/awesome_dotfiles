@@ -168,7 +168,7 @@ static const Rule rules[] = {
 	RULE(.class = "Code - OSS", 				.tags = 1 << 7, .switchtag = 1)
 	RULE(.class = "shotcut", 						.tags = 1 << 8, .switchtag = 1)
 	RULE(.class = "scrcpy", 						.tags = 1 << 8, .switchtag = 1)
-	RULE(.class = "ghb", 								.tags = 1 << 8, .switchtag = 1)
+	RULE(.title = "HandBrake",					.tags = 1 << 8, .switchtag = 1)
 	RULE(.class = "libreoffice", 				.tags = 1 << 5, .switchtag = 1)
 
 	/* Scratchpads rules */ 
