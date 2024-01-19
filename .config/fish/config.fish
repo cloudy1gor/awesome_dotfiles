@@ -45,10 +45,15 @@ set -g theme_powerline_fonts yes
 set -g fish_prompt_pwd_dir_length 0
 
 # aliases"
-alias ls "ls --color=auto -p -G"
-alias la "ls -A"
-alias ll "ls -l"
-alias lla "ll -A"
+# alias ls "ls --color=auto -p -G"
+# alias la "ls -A"
+# alias ll "ls -l"
+# alias lla "ll -A"
+alias ls "exa --icons"
+alias la "exa --icons -A"
+alias ll "exa --icons -l"
+alias lla "exa --icons -A"
+
 alias g git
 
 alias mv="mv -iv"
@@ -113,7 +118,7 @@ starship init fish | source
 set -xg DBUS_SESSION_BUS_ADDRESS (dbus-run-session echo $DBUS_SESSION_BUS_ADDRESS)
 
 if status --is-interactive
-   neofetch
+    neofetch
 end
 
 
