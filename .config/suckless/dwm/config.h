@@ -319,7 +319,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask, 						XK_e, 				 spawn, 		 SHCMD("~/.config/rofi/powermenu.sh") },
 
 	/* Wallpapers chager */
-	{ MODKEY|ShiftMask,             XK_w, 		 		 spawn,      SHCMD("feh --bg-scale --randomize --no-fehbg ~/Pictures/Wallpapers/*") },
+	{ MODKEY|ShiftMask,             XK_w, 		 		 spawn,      SHCMD("feh --bg-fill --randomize --no-fehbg ~/Pictures/Wallpapers/*") },
 };
 
 static const char *const autostart[] = {
