@@ -20,7 +20,7 @@ ksuperkey -e 'Super_L=Alt_L|F1' & ksuperkey -e 'Super_R=Alt_L|F1' &
 xsetroot -cursor_name left_ptr &
 
 # Wallpaper
-feh --bg-scale --randomize --no-fehbg ~/Pictures/Wallpapers/*
+feh --bg-fill --randomize --no-fehbg ~/Pictures/Wallpapers/*
 
 # Keyboard
 # setxkbmap -option grp:win_space_toggle us,ua &
@@ -52,4 +52,3 @@ export XDG_SESSION_DESKTOP=dwm
 export XDG_CURRENT_DESKTOP=dwm
 export DESKTOP_SESSION=dwm
 export XDG_SESSION_TYPE=x11
-
