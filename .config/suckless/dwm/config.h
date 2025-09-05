@@ -149,8 +149,9 @@ static const Rule rules[] = {
 	RULE(.class = "connman-gtk", 				.tags = 1 << 0, .switchtag = 1, .isfloating = 1, .floatpos = "40% 40% 70% 80%")
 	RULE(.class = "Safeeyes", 					.tags = 1 << 3, .isfloating = 1, .floatpos = "30 70")
 	RULE(.class = "qutebrowser", 				.tags = 1 << 1, .switchtag = 1 )
-	RULE(.class = "Vivaldi-stable", 		.tags = 1 << 1, .switchtag = 1)
+	RULE(.class = "Vivaldi-stable", 		.tags = 1 << 1, .switchtag = 1 )
 	RULE(.class = "Brave-browser", 			.tags = 1 << 1, .switchtag = 1 )
+	RULE(.class = "chromium", 					.tags = 1 << 1, .switchtag = 1 )
 	RULE(.class = "KeePassXC", 					.tags = 1 << 3, .switchtag = 1, .isfloating = 1, .floatpos = "40% 40% 70% 80%")
 	RULE(.class = "veracrypt", 					.tags = 1 << 3, .switchtag = 1, .isfloating = 1)
 	RULE(.class = "kitty", 							.isterminal = 1)
@@ -314,7 +315,7 @@ static const Key keys[] = {
 	/* Apps */
 	{ 0,                       			XK_Print, 		 spawn,      SHCMD("flameshot gui") },
 	{ MODKEY,                       XK_BackSpace,  spawn,      SHCMD("Thunar") },
-	{ MODKEY,                       XK_w, 		 		 spawn,      SHCMD("brave-browser-stable") },
+	{ MODKEY,                       XK_w, 		 		 spawn,      SHCMD("chromium") },
 	{ MODKEY,                       XK_n, 		 		 spawn,      SHCMD("kitty nvim") },
 	{ MODKEY|ShiftMask, 						XK_e, 				 spawn, 		 SHCMD("~/.config/rofi/powermenu.sh") },
 

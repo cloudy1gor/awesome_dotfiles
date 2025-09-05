@@ -1,0 +1,39 @@
+{
+  "logo": {
+    "source": "/home/clo/.config/fastfetch/logo.txt",
+    "color": {
+      "1": "black"
+    },
+    "padding": {
+      "top": 1,
+      "left": 2
+    }
+  },
+  "display": {
+    "separator": " "
+  },
+  "modules": [
+    {
+      "type": "os",
+      "key": "\u001b[36m██  \u001b[0m",
+      "keyColor": "green"
+    },
+    {
+      "type": "wm",
+      "key": "\u001b[31m██  \u001b[0m"
+    },
+    {
+      "type": "shell",
+      "key": "\u001b[35m██  \u001b[0m"
+    },
+    {
+      "type": "packages",
+      "key": "\u001b[34m██  \u001b[0m",
+      "keyColor": "blue"
+    },
+    {
+      "type": "uptime",
+      "key": "\u001b[32m██  \u001b[0m"
+    }
+  ]
+}

@@ -22,9 +22,9 @@ case $chosen in
         sudo reboot
         ;;
     $lock)
-        ~/.local/bin/i3lock-fancy/i3lock-fancy.sh
+        slock
         ;;
     $logout)
-        bspc quit
+        killall Xorg
         ;;
 esac

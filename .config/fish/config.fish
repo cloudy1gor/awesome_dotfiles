@@ -5,29 +5,32 @@
 # ██║     ██║███████║██║  ██║
 # ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝
                            
-# # Autostart
+# ------------------------------
+# Автозапуск X (startx)
+# ------------------------------
 if status is-login
-    if test -z "$DISPLAY" -a "$(tty)" = /dev/tty1
-        exec startx -- -keeptty
-    end
-
-    if test -z "$XDG_RUNTIME_DIR"
-        set -gx XDG_RUNTIME_DIR "/tmp/{$UID}-runtime-dir"
-        if not test -d "$XDG_RUNTIME_DIR"
-            mkdir -p "$XDG_RUNTIME_DIR"
-            chmod 0700 "$XDG_RUNTIME_DIR"
-        end
-    end
+    # if test -z "$DISPLAY" -a (tty) = /dev/tty1
+    #     exec startx -- -keeptty
+    # end
 end
 
-# For the pipewire dbus session
+# ------------------------------
+# XDG_RUNTIME_DIR
+# ------------------------------
+if not set -q XDG_RUNTIME_DIR
+    set RUNTIME_DIR /run/user/(id -u)
+    if not test -d $RUNTIME_DIR
+        mkdir -p $RUNTIME_DIR
+        chmod 0700 $RUNTIME_DIR
+    end
+    set -x XDG_RUNTIME_DIR $RUNTIME_DIR
+end
+
+# ------------------------------
+# XDG_CONFIG_HOME
+# ------------------------------
 if not set -q XDG_CONFIG_HOME
     set -x XDG_CONFIG_HOME $HOME/.config
-end
-
-# For the pipewire dbus session if used autostart & autologin
-if not set -q XDG_RUNTIME_DIR
-    set -x XDG_RUNTIME_DIR /run/user/$USER_ID
 end
 
 set fish_greeting ""
@@ -118,7 +121,7 @@ starship init fish | source
 set -xg DBUS_SESSION_BUS_ADDRESS (dbus-run-session echo $DBUS_SESSION_BUS_ADDRESS)
 
 if status --is-interactive
-    neofetch
+    fastfetch
 end
 
 

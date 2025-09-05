@@ -26,12 +26,12 @@ function send_notification {
 case $1 in
   up)
     # increase the backlight
-    "$BRIGHTNESSCTL" set "${BRIGHTNESS_STEPS:-5}%+" -q
+    sudo "$BRIGHTNESSCTL" set "${BRIGHTNESS_STEPS}%+" -q
     send_notification
     ;;
   down)
     # decrease the backlight
-    "$BRIGHTNESSCTL" set "${BRIGHTNESS_STEPS:-5}%-" -q
+    sudo "$BRIGHTNESSCTL" set "${BRIGHTNESS_STEPS}%-" -q
     send_notification
     ;;
 esac
