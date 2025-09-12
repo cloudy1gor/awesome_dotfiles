@@ -1,0 +1,10 @@
+#!/bin/sh
+USER=clo
+UID=$(id -u $USER)
+RUNDIR=/run/user/$UID
+
+mkdir -p "$RUNDIR"
+chown "$USER:$USER" "$RUNDIR"
+chmod 700 "$RUNDIR"
+
+exec chpst -u "$USER:$USER" sleep infinity
