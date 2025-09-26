@@ -1,0 +1,33 @@
+# Font
+set font "CozetteCrossedSeven 11"
+
+# Recolor mode (invert / monochrome)
+set recolor "false"
+set recolor-keephue "true"
+set recolor-darkcolor "#FFFFFF"   # foreground (text) - now white
+set recolor-lightcolor "#000000"  # background (page) - now black
+
+# UI colors
+set default-bg "#FFFFFF"          # now white background
+set default-fg "#000000"          # now black text
+
+# Selection colors
+set selection-clipboard "primary"
+
+# Highlight colors
+set highlight-color "#7F7F7F"                           # inverted grey highlight background
+set highlight-fg "#000000"                              # black highlight text
+set highlight-color "rgba(127, 127, 127, 0.5)"         # inverted grey for other matches
+set highlight-active-color "rgba(183, 183, 183, 0.7)"  # lighter grey for current match
+
+# Input bar (for commands like :open or ?search)
+set inputbar-bg "#FFFFFF"         # white background of the input bar
+set inputbar-fg "#000000"         # black text color of the input bar
+
+# Command completion colors
+set completion-bg "#FFFFFF"           # white background of the completion list
+set completion-fg "#000000"           # black text of the completion entries
+set completion-group-bg "#FFFFFF"     # white background of group headers in completion
+set completion-group-fg "#000000"     # black text of group headers
+set completion-highlight-bg "#000000" # black background of highlighted entry
+set completion-highlight-fg "#FFFFFF" # white text of highlighted entry
